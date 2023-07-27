@@ -27,7 +27,7 @@ public class Room {
     @Column(nullable=false)
     private Date finish_time;
 
-    @OneToMany(mappedBy = "Booking")
+    @OneToMany(targetEntity = Booking.class)
     private List<Booking> bookingList;
 
     public Room(String name, String location, int capacity, Date start_time, Date finish_time) {
@@ -85,5 +85,13 @@ public class Room {
 
     public void setFinish_time(Date finish_time) {
         this.finish_time = finish_time;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
     }
 }
