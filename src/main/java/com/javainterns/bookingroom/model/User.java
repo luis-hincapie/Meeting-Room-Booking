@@ -2,13 +2,14 @@ package com.javainterns.bookingroom.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "USERSB")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(length = 100, nullable = false)
     private String name;
     @Column(length = 100, nullable = false, unique = true)
@@ -40,7 +41,7 @@ public class User {
         return bookingList;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,5 +55,32 @@ public class User {
 
     public void setBookingList(List bookingList) {
         this.bookingList = bookingList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!id.equals(user.id)) return false;
+        if (!name.equals(user.name)) return false;
+        return email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this,name,this,email);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", bookingList=" + bookingList +
+                '}';
     }
 }
