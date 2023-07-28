@@ -2,7 +2,7 @@ package com.javainterns.bookingroom.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -11,21 +11,23 @@ public class Room {
     @Id
     @GeneratedValue
     @Column(nullable=false)
-    private long id;
+    private Long id;
 
     @Column(nullable=false)
     private String name;
     @Column(nullable=false)
     private String location;
     @Column(nullable=false)
-    private int capacity;
+    private Integer capacity;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable=false)
-    private Date startTime;
-    @Temporal(TemporalType.TIMESTAMP)
+    private Integer startTime;
+
     @Column(nullable=false)
-    private Date finishTime;
+    private Integer finishTime;
+
+    @Column(nullable=false)
+    private boolean isActive;
 
     @OneToMany(targetEntity = Booking.class)
     private List<Booking> bookingList;
@@ -33,24 +35,25 @@ public class Room {
     public Room() {
     }
 
-    public Room(String name, String location, int capacity, Date startTime, Date finishTime) {
+    public Room(String name, String location, Integer capacity, Integer startTime, Integer finishTime) {
 
         this.name = name;
         this.location = location;
         this.capacity = capacity;
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.isActive = true;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName(String hola) {
+    public String getName() {
         return name;
     }
 
@@ -66,27 +69,27 @@ public class Room {
         this.location = location;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
-    public Date getStartTime() {
+    public Integer getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Integer startTime) {
         this.startTime = startTime;
     }
 
-    public Date getFinishTime() {
+    public Integer getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Date finishTime) {
+    public void setFinishTime(Integer finishTime) {
         this.finishTime = finishTime;
     }
 
@@ -97,4 +100,14 @@ public class Room {
     public void setBookingList(List<Booking> bookingList) {
         this.bookingList = bookingList;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+
 }
