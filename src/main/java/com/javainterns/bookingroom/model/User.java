@@ -4,16 +4,20 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "USERSB")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(length = 100, nullable = false)
     private String name;
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
     @OneToMany(targetEntity = Booking.class)
     private List<Booking> bookingList;
+
+    public User() {
+    }
 
     public User(String name, String email){
         this.name = name;

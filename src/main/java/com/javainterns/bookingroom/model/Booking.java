@@ -2,6 +2,8 @@ package com.javainterns.bookingroom.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -17,13 +19,17 @@ public class Booking {
     @ManyToOne(targetEntity = User.class)
     private User user;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private Date startTime;
+    private LocalTime startTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private Date endTime;
+    private LocalTime endTime;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private LocalDate date;
 
     public Booking() {
     }
@@ -52,26 +58,35 @@ public class Booking {
         this.user = user;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
-    public Booking(Room room, User user, Date startTime, Date endTime) {
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Booking(Room room, User user, LocalTime startTime, LocalTime endTime, LocalDate date) {
         this.room = room;
         this.user = user;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.date = date;
     }
 }

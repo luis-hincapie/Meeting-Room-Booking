@@ -22,21 +22,24 @@ public class Room {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable=false)
-    private Date start_time;
+    private Date startTime;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable=false)
-    private Date finish_time;
+    private Date finishTime;
 
-    @OneToMany(mappedBy = "Booking")
+    @OneToMany(targetEntity = Booking.class)
     private List<Booking> bookingList;
 
-    public Room(String name, String location, int capacity, Date start_time, Date finish_time) {
+    public Room() {
+    }
+
+    public Room(String name, String location, int capacity, Date startTime, Date finishTime) {
 
         this.name = name;
         this.location = location;
         this.capacity = capacity;
-        this.start_time = start_time;
-        this.finish_time = finish_time;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
     }
 
     public long getId() {
@@ -47,7 +50,7 @@ public class Room {
         this.id = id;
     }
 
-    public String getName() {
+    public String getName(String hola) {
         return name;
     }
 
@@ -71,19 +74,27 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getFinish_time() {
-        return finish_time;
+    public Date getFinishTime() {
+        return finishTime;
     }
 
-    public void setFinish_time(Date finish_time) {
-        this.finish_time = finish_time;
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
     }
 }
