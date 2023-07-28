@@ -19,13 +19,11 @@ public class Booking {
     @ManyToOne(targetEntity = User.class)
     private User user;
 
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private LocalTime startTime;
+    private Integer startTime;
 
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private LocalTime endTime;
+    private Integer endTime;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
@@ -58,19 +56,19 @@ public class Booking {
         this.user = user;
     }
 
-    public LocalTime getStartTime() {
+    public Integer getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(Integer startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public Integer getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(Integer endTime) {
         this.endTime = endTime;
     }
 
@@ -82,7 +80,7 @@ public class Booking {
         this.date = date;
     }
 
-    public Booking(Room room, User user, LocalTime startTime, LocalTime endTime, LocalDate date) {
+    public Booking(Room room, User user, Integer startTime, Integer endTime, LocalDate date) {
         this.room = room;
         this.user = user;
         this.startTime = startTime;

@@ -1,12 +1,16 @@
 package com.javainterns.bookingroom.service;
+import java.awt.print.Book;
 import java.util.List;
+import java.util.Optional;
+
 import com.javainterns.bookingroom.model.Booking;
+import com.javainterns.bookingroom.model.dto.BookingRequest;
 import org.springframework.stereotype.Service;
 
 public interface BookingService {
-    Boolean create(Booking booking);
+    Booking create(BookingRequest bookingRequest);
     Booking update(Booking booking);
-    Booking findById(Long id);
+    Optional<Booking> findById(Long id);
     Boolean delete(Long id);
     List<Booking> findAll();
 }
