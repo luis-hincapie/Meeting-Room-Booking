@@ -3,11 +3,10 @@ import java.util.List;
 import com.javainterns.bookingroom.model.Booking;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface BookingService {
-    Booking create(Booking booking);
-    Booking update(Booking booking);
+    Boolean create(Booking booking);
+    Boolean update(Booking booking);
     Booking findById(Long id);
-    boolean delete(Booking booking);
+    Boolean delete(Booking booking);
     List<Booking> findAll();
 }
