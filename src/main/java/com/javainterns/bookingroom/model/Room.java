@@ -97,4 +97,12 @@ public class Room {
     public void setBookingList(List<Booking> bookingList) {
         this.bookingList = bookingList;
     }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
 }
