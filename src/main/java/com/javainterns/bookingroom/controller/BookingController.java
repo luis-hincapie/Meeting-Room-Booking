@@ -23,12 +23,12 @@ public class BookingController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/all")
+    @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> bookingList(){
         return ResponseEntity.ok(bookingService.findAll());
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBooking(@PathVariable Long id){
         return bookingService.delete(id) ? new ResponseEntity<String>(HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
