@@ -17,15 +17,17 @@ public class BookingServiceImpl implements BookingService{
         return true;
     }
     @Override
-    public Boolean update(Booking booking) {
-        bookingRepository.save(booking);
-        return true;
+    public Booking update(Booking booking) {
+        return bookingRepository.save(booking);
     }
 
     @Override
-    public Boolean delete(Booking booking) {
-        bookingRepository.delete(booking);
-        return true;
+    public Boolean delete(Long id) {
+        if(bookingRepository.existsById(id)) {
+            bookingRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
