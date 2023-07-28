@@ -26,7 +26,7 @@ public class BookingServiceImpl implements BookingService{
     public Booking create(BookingRequest bookingRequest) {
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
         User user = new User("david", "david@gomez.com");
-        Room room = new Room("aula1", "medellin", 10, Date.from(Instant.now()), Date.from(Instant.now()));
+        Room room = new Room("aula1", "medellin", 10, 5, 10);
         booking.setUser(user);
         booking.setRoom(room);
         return bookingRepository.save(booking);
