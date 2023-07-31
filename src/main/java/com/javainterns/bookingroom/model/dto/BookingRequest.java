@@ -1,9 +1,9 @@
 package com.javainterns.bookingroom.model.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.time.LocalDate;
 
 public class BookingRequest {
     @NotNull

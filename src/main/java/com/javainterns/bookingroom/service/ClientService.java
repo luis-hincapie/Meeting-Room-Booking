@@ -1,9 +1,9 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.model.Client;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.javainterns.bookingroom.model.Client;
 
 public interface ClientService {
     Client create(Client client);

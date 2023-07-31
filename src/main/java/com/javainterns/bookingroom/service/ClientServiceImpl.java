@@ -1,13 +1,15 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.model.Client;
-import com.javainterns.bookingroom.repository.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import javax.persistence.EntityNotFoundException;
-
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.javainterns.bookingroom.model.Client;
+import com.javainterns.bookingroom.repository.ClientRepository;
 
 @Service
 public class ClientServiceImpl implements ClientService {
