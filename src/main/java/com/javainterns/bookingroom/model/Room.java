@@ -1,8 +1,6 @@
 package com.javainterns.bookingroom.model;
 
 import jakarta.persistence.*;
-
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -29,7 +27,7 @@ public class Room {
     @Column(nullable=false)
     private boolean isActive;
 
-    @OneToMany(targetEntity = Booking.class)
+    @OneToMany(mappedBy = "room")
     private List<Booking> bookingList;
 
     public Room() {

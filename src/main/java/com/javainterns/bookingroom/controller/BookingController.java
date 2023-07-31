@@ -1,7 +1,6 @@
 package com.javainterns.bookingroom.controller;
 
 import com.javainterns.bookingroom.model.Booking;
-import com.javainterns.bookingroom.model.User;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.service.BookingService;
 import com.javainterns.bookingroom.service.UserService;
@@ -10,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/booking")

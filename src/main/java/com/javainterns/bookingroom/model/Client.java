@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USERSB")
-public class User {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -14,14 +13,14 @@ public class User {
     private String name;
     @Column(length = 100, nullable = false, unique = true)
     private String email;
-    @OneToMany(targetEntity = Booking.class)
+    @OneToMany(mappedBy = "client")
     private List<Booking> bookingList;
 
-    public User() {
+    public Client() {
     }
 
 
-    public User(String name, String email){
+    public Client(String name, String email){
         this.name = name;
         this.email = email;
     }
@@ -63,11 +62,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        Client CLient = (Client) o;
 
-        if (!id.equals(user.id)) return false;
-        if (!name.equals(user.name)) return false;
-        return email.equals(user.email);
+        if (!id.equals(CLient.id)) return false;
+        if (!name.equals(CLient.name)) return false;
+        return email.equals(CLient.email);
     }
 
     @Override

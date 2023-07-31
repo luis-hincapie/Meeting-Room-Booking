@@ -1,10 +1,10 @@
 package com.javainterns.bookingroom.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 public class Booking {
@@ -14,10 +14,14 @@ public class Booking {
     private Long id;
 
     @ManyToOne(targetEntity = Room.class)
+    @JoinColumn(name = "room_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Room room;
 
-    @ManyToOne(targetEntity = User.class)
-    private User user;
+    @ManyToOne(targetEntity = Client.class)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Client client;
 
     @Column(nullable = false)
     private Integer startTime;
@@ -48,12 +52,12 @@ public class Booking {
         this.room = room;
     }
 
-    public User getUser() {
-        return user;
+    public Client getUser() {
+        return client;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Client CLient) {
+        this.client = CLient;
     }
 
     public Integer getStartTime() {
@@ -80,9 +84,9 @@ public class Booking {
         this.date = date;
     }
 
-    public Booking(Room room, User user, Integer startTime, Integer endTime, LocalDate date) {
+    public Booking(Room room, Client Client, Integer startTime, Integer endTime, LocalDate date) {
         this.room = room;
-        this.user = user;
+        this.client = Client;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;

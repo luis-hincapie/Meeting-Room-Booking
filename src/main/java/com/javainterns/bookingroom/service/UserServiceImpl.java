@@ -1,6 +1,6 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.model.User;
+import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,21 +19,21 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User create(User user) {
-        userRepository.save(user);
-        return user;
+    public Client create(Client CLient) {
+        userRepository.save(CLient);
+        return CLient;
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        Optional<User> findUserOptional = userRepository.findById(id);
-        User findUser = findUserOptional.orElseThrow(EntityNotFoundException::new);
-        return Optional.ofNullable(findUser);
+    public Optional<Client> findById(Long id) {
+        Optional<Client> findUserOptional = userRepository.findById(id);
+        Client findClient = findUserOptional.orElseThrow(EntityNotFoundException::new);
+        return Optional.ofNullable(findClient);
 
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Client> findAll() {
         return userRepository.findAll();
     }
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User update(User user) {
-        return userRepository.save(user);
+    public Client update(Client CLient) {
+        return userRepository.save(CLient);
     }
 }

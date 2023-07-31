@@ -1,16 +1,14 @@
 package com.javainterns.bookingroom.service;
 
 import com.javainterns.bookingroom.model.Booking;
+import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.model.Room;
-import com.javainterns.bookingroom.model.User;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
 import com.javainterns.bookingroom.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,14 +20,12 @@ public class BookingServiceImpl implements BookingService{
     BookingRequestMapper bookingRequestMapper;
     @Autowired
     UserService userService;
-    @Autowired
-    RoomService roomService;
     @Override
     public Booking create(BookingRequest bookingRequest) {
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
-        User user = userService.findById(bookingRequest.getUserId()).get();
-        Room room = roomService.getByIdRoom(bookingRequest.getRoomId()).get();
-        booking.setUser(user);
+        Client CLient = new Client("david", "david@gomez.com");
+        Room room = new Room("aula1", "medellin", 10, 6, 8);
+        booking.setUser(CLient);
         booking.setRoom(room);
         return bookingRepository.save(booking);
     }

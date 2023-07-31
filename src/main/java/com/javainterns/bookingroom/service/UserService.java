@@ -1,17 +1,17 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.model.User;
+import com.javainterns.bookingroom.model.Client;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User create(User user);
-    Optional<User> findById(Long id);
+    Client create(Client CLient);
+    Optional<Client> findById(Long id);
 
-    List<User> findAll();
+    List<Client> findAll();
 
     void delete(Long id);
 
-    User update(User user);
+    Client update(Client CLient);
 }
