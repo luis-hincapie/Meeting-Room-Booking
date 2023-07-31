@@ -1,33 +1,44 @@
 package com.javainterns.bookingroom.model;
 
-import jakarta.persistence.*;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Room {
 
     @Id
-    @GeneratedValue
-    @Column(nullable=false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String location;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer capacity;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer startTime;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer finishTime;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Booking> bookingList;
 
     public Room() {
@@ -106,6 +117,5 @@ public class Room {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 
 }

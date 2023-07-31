@@ -23,15 +23,15 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> create(@RequestBody Client CLient) {
-        Client ClientCreate = clientService.create(CLient);
+    public ResponseEntity<Client> create(@RequestBody Client client) {
+        Client ClientCreate = clientService.create(client);
         return new ResponseEntity<>(ClientCreate, null, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> update(@RequestBody Client CLient, @PathVariable @NotNull Long id) {
-        CLient.setId(id);
-        return ResponseEntity.ok(clientService.update(CLient));
+    public ResponseEntity<Client> update(@RequestBody Client client, @PathVariable @NotNull Long id) {
+        client.setId(id);
+        return ResponseEntity.ok(clientService.update(client));
     }
 
     @GetMapping

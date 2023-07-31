@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientService {
-    Client create(Client CLient);
+    Client create(Client client);
     Optional<Client> findById(Long id);
 
     List<Client> findAll();
 
     void delete(Long id);
 
-    Client update(Client CLient);
+    Client update(Client client);
 }
