@@ -2,6 +2,7 @@ package com.javainterns.bookingroom.model;
 
 import jakarta.persistence.*;
 
+
 import java.time.LocalTime;
 import java.util.List;
 
@@ -108,6 +109,5 @@ public class Room {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 
 }
