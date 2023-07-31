@@ -2,9 +2,12 @@ package com.javainterns.bookingroom.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.javainterns.bookingroom.model.dto.ClientRequest;
+import com.javainterns.bookingroom.model.mapper.ClientRequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,30 +16,32 @@ import com.javainterns.bookingroom.repository.ClientRepository;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    @Autowired
-    private ClientRepository clientRepository;
 
+    private ClientRepository clientRepository;
+    private ClientRequestMapper clientRequestMapper;
+    @Autowired
     public ClientServiceImpl(ClientRepository clientRepository){
         this.clientRepository = clientRepository;
     }
 
     @Override
-    public Client create(Client CLient) {
-        clientRepository.save(CLient);
-        return CLient;
+    public ClientRequest create(ClientRequest clientRequest) {
+        Client client = clientRequestMapper.toClient(clientRequest);
+        return clientRequestMapper.toClientRequest(clientRepository.save(client));
     }
 
     @Override
-    public Optional<Client> findById(Long id) {
+    public ClientRequest findById(Long id) {
         Optional<Client> findUserOptional = clientRepository.findById(id);
         Client findClient = findUserOptional.orElseThrow(EntityNotFoundException::new);
-        return Optional.ofNullable(findClient);
+        return clientRequestMapper.toClientRequest(findClient);
 
     }
 
     @Override
-    public List<Client> findAll() {
-        return clientRepository.findAll();
+    public List<ClientRequest> findAll() {
+        return clientRepository.findAll().stream().map(x -> clientRequestMapper
+                .toClientRequest(x)).collect(Collectors.toList());
     }
 
     @Override
@@ -45,7 +50,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client update(Client CLient) {
-        return clientRepository.save(CLient);
+    public ClientRequest update(Client CLient) {
+        return clientRequestMapper.toClientRequest(clientRepository.save(CLient));
+    }
+
+    @Override
+    public Client findClient(Long id) {
+        Optional<Client> findUserOptional = clientRepository.findById(id);
+        return findUserOptional.orElseThrow(EntityNotFoundException::new);
     }
 }

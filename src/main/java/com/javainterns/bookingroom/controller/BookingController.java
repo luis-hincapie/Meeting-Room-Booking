@@ -34,13 +34,18 @@ public class BookingController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBooking(@PathVariable Long id){
-        bookingService.delete(id);
-        return new ResponseEntity<String>("Booking deleted",HttpStatus.OK);
+        return bookingService.delete(id) ? new ResponseEntity<String>(HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id){
-        return new ResponseEntity<>(bookingService.findById(id),HttpStatus.OK);
+    public ResponseEntity<Booking> getBooking(@PathVariable Long id){
+        var queryResult = bookingService.findById(id);
+        return queryResult.isPresent() ? new ResponseEntity<>(queryResult.get(),HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookingRequest> updateBooking(@RequestBody Booking booking, @PathVariable Long id){
+        return ResponseEntity.ok(bookingService.update(booking));
     }
 
     @PostMapping("/")

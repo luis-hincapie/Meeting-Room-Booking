@@ -2,11 +2,7 @@ package com.javainterns.bookingroom.model.mapper;
 
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalTime;
-import java.util.function.Function;
 
 @Component
 public class BookingRequestMapper {
