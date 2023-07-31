@@ -1,11 +1,9 @@
 package com.javainterns.bookingroom.model;
 
-
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
+import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
+import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Min;
-
 
 @Entity
 public class Room {
@@ -126,7 +123,15 @@ public class Room {
         isActive = active;
     }
 
+    @AssertTrue(message = "startday could not be greater than endday")
+    public boolean isValidTimeRange(){
 
+        if(finishTime>startTime) {
+            return true;
+        }else {
+            throw new StartTimeIsGreaterThanEndTime();
+        }
+    }
 
 
 

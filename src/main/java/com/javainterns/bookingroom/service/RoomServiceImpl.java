@@ -1,17 +1,13 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.model.Room;
-import com.javainterns.bookingroom.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
-import javax.persistence.EntityNotFoundException;
-
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.javainterns.bookingroom.model.Room;
+import com.javainterns.bookingroom.repository.RoomRepository;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
@@ -33,10 +29,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public List<Room> findAll() {
-
-        List<Room> room = new ArrayList();
-        room = roomRepository.findAll();
-        return room;
+        return roomRepository.findAll();
     }
 
     @Override
