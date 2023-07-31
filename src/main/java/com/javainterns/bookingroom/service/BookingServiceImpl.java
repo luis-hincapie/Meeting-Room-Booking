@@ -39,7 +39,7 @@ public class BookingServiceImpl implements BookingService {
     public Boolean delete(Long id) {
         if (!bookingRepository.existsById(id)) throw new NoRecordFoundException("Booking Record Not Found");
         bookingRepository.deleteById(id);
-        return false;
+        return true;
     }
 
     @Override
