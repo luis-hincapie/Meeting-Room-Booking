@@ -1,5 +1,6 @@
 package com.javainterns.bookingroom.service;
 
+import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.model.Room;
@@ -42,10 +43,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Boolean delete(Long id) {
-        if (bookingRepository.existsById(id)) {
-            bookingRepository.deleteById(id);
-            return true;
+        if (!bookingRepository.existsById(id)) {
+            throw new NoRecordFoundException();
         }
+        bookingRepository.deleteById(id);
         return false;
     }
 
