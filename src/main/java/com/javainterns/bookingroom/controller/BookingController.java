@@ -3,7 +3,7 @@ package com.javainterns.bookingroom.controller;
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.service.BookingService;
-import com.javainterns.bookingroom.service.UserService;
+import com.javainterns.bookingroom.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
     @Autowired
-    UserService userService;
+    ClientService clientService;
 
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> bookingList(){
