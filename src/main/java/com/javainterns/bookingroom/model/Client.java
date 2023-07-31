@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,7 +46,7 @@ public class Client {
         return email;
     }
 
-    public List getBookingList() {
+    public List<Booking> getBookingList() {
         return bookingList;
     }
 
@@ -63,7 +62,7 @@ public class Client {
         this.email = email;
     }
 
-    public void setBookingList(List bookingList) {
+    public void setBookingList(List<Booking> bookingList) {
         this.bookingList = bookingList;
     }
 
@@ -74,13 +73,13 @@ public class Client {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        Client CLient = (Client) o;
+        Client client = (Client) o;
 
-        if (!id.equals(CLient.id))
+        if (!id.equals(client.id))
             return false;
-        if (!name.equals(CLient.name))
+        if (!name.equals(client.name))
             return false;
-        return email.equals(CLient.email);
+        return email.equals(client.email);
     }
 
     @Override
