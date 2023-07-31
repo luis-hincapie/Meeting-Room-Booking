@@ -1,6 +1,6 @@
 package com.javainterns.bookingroom.controller;
 
-import com.javainterns.bookingroom.model.User;
+import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.service.UserService;
 import com.javainterns.bookingroom.service.UserServiceImpl;
 import jakarta.validation.constraints.NotNull;
@@ -23,24 +23,24 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User userCreate = userService.create(user);
-        return new ResponseEntity<>(userCreate, null, HttpStatus.CREATED);
+    public ResponseEntity<Client> create(@RequestBody Client CLient) {
+        Client ClientCreate = userService.create(CLient);
+        return new ResponseEntity<>(ClientCreate, null, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable @NotNull Long id) {
-        user.setId(id);
-        return ResponseEntity.ok(userService.update(user));
+    public ResponseEntity<Client> update(@RequestBody Client CLient, @PathVariable @NotNull Long id) {
+        CLient.setId(id);
+        return ResponseEntity.ok(userService.update(CLient));
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<Client>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> findById(
+    public ResponseEntity<Optional<Client>> findById(
             @PathVariable @NotNull Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
