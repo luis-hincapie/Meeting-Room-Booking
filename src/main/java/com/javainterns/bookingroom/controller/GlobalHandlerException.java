@@ -15,7 +15,7 @@ public class GlobalHandlerException {
     @ExceptionHandler(NoRecordFoundException.class)
     @ResponseBody
     public ResponseEntity<String> handleNoRecordFoundException(NoRecordFoundException exception){
-        return new ResponseEntity<String>("Record Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(StartTimeIsGreaterThanEndTime.class)
