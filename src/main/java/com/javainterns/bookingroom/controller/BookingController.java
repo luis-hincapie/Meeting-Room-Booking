@@ -20,14 +20,14 @@ import com.javainterns.bookingroom.service.BookingService;
 import com.javainterns.bookingroom.service.ClientService;
 
 @RestController
-@RequestMapping(path = "/booking")
+@RequestMapping(path = "/bookings")
 public class BookingController {
     @Autowired
     BookingService bookingService;
     @Autowired
     ClientService clientService;
 
-    @GetMapping("/bookings")
+    @GetMapping("/")
     public ResponseEntity<List<BookingRequest>> bookingList(){
         return ResponseEntity.ok(bookingService.findAll());
     }
@@ -48,8 +48,8 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.update(booking));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity createBooking(@RequestBody BookingRequest bookingRequest){
+    @PostMapping("/")
+    public ResponseEntity<BookingRequest> createBooking(@RequestBody BookingRequest bookingRequest){
         return ResponseEntity.ok(bookingService.create(bookingRequest));
     }
 }
