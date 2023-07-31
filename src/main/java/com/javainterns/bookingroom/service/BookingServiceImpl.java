@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,26 +37,29 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingRequest update(Booking booking) {
+        if (!bookingRepository.existsById(booking.getId())) throw new NoRecordFoundException("Booking Record Not Found");
         return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
     }
 
     @Override
     public Boolean delete(Long id) {
-        if (!bookingRepository.existsById(id)) {
-            throw new NoRecordFoundException();
-        }
+        if (!bookingRepository.existsById(id)) throw new NoRecordFoundException("Booking Record Not Found");
         bookingRepository.deleteById(id);
         return false;
     }
 
     @Override
-    public Optional<Booking> findById(Long id) {
-        return bookingRepository.findById(id);
+    public BookingRequest findById(Long id) {
+        Optional<Booking> booking =  bookingRepository.findById(id);
+        if(!booking.isPresent())throw new NoRecordFoundException("Booking Record Not Found");
+        return bookingRequestMapper.toBookingRequest(booking.get());
     }
 
     @Override
     public List<BookingRequest> findAll() {
-        return bookingRepository.findAll().stream().map(x -> bookingRequestMapper
+        List<Booking> bookingList = bookingRepository.findAll();
+        if(bookingList.isEmpty()) throw new NoRecordFoundException("Booking Record Not Found");
+        return bookingList.stream().map(x -> bookingRequestMapper
                 .toBookingRequest(x)).collect(Collectors.toList());
     }
 }

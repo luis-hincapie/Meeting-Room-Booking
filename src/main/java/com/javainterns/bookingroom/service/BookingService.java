@@ -8,7 +8,7 @@ import com.javainterns.bookingroom.model.dto.BookingRequest;
 public interface BookingService {
     BookingRequest create(BookingRequest bookingRequest);
     BookingRequest update(Booking booking);
-    Optional<Booking> findById(Long id);
+    BookingRequest findById(Long id);
     Boolean delete(Long id);
     List<BookingRequest> findAll();
 }

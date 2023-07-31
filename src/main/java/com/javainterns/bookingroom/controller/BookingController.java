@@ -38,9 +38,8 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBooking(@PathVariable Long id){
-        var queryResult = bookingService.findById(id);
-        return queryResult.isPresent() ? new ResponseEntity<>(queryResult.get(),HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id){
+        return new ResponseEntity<>(bookingService.findById(id),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
