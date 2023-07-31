@@ -21,7 +21,7 @@ public class BookingRequest {
     @Size(min = 0, max = 23)
     private Integer endTime;
 
-    BookingRequest(){}
+    public BookingRequest(){}
 
     public Long getUserId() {
         return userId;

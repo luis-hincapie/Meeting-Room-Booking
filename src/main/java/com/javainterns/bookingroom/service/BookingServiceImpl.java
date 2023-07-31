@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
-public class BookingServiceImpl implements BookingService{
+public class BookingServiceImpl implements BookingService {
     @Autowired
     BookingRepository bookingRepository;
     @Autowired
@@ -22,23 +24,25 @@ public class BookingServiceImpl implements BookingService{
     ClientService clientService;
     @Autowired
     RoomService roomService;
+
     @Override
-    public Booking create(BookingRequest bookingRequest) {
+    public BookingRequest create(BookingRequest bookingRequest) {
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
         Client client = clientService.findById(bookingRequest.getUserId()).get();
         Room room = roomService.findById(bookingRequest.getRoomId()).get();
         booking.setUser(client);
         booking.setRoom(room);
-        return bookingRepository.save(booking);
+        return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
     }
+
     @Override
-    public Booking update(Booking booking) {
-        return bookingRepository.save(booking);
+    public BookingRequest update(Booking booking) {
+        return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
     }
 
     @Override
     public Boolean delete(Long id) {
-        if(bookingRepository.existsById(id)) {
+        if (bookingRepository.existsById(id)) {
             bookingRepository.deleteById(id);
             return true;
         }
@@ -51,7 +55,8 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
-    public List<Booking> findAll() {
-        return bookingRepository.findAll();
+    public List<BookingRequest> findAll() {
+        return bookingRepository.findAll().stream().map(x -> bookingRequestMapper
+                .toBookingRequest(x)).collect(Collectors.toList());
     }
 }
