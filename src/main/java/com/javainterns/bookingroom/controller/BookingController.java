@@ -42,11 +42,6 @@ public class BookingController {
         return new ResponseEntity<>(bookingService.findById(id),HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BookingRequest> updateBooking(@RequestBody Booking booking, @PathVariable Long id){
-        return ResponseEntity.ok(bookingService.update(booking));
-    }
-
     @PostMapping("/")
     public ResponseEntity<BookingRequest> createBooking(@RequestBody BookingRequest bookingRequest){
         return ResponseEntity.ok(bookingService.create(bookingRequest));

@@ -36,12 +36,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingRequest update(Booking booking) {
-        if (!bookingRepository.existsById(booking.getId())) throw new NoRecordFoundException("Booking Record Not Found");
-        return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
-    }
-
-    @Override
     public Boolean delete(Long id) {
         if (!bookingRepository.existsById(id)) throw new NoRecordFoundException("Booking Record Not Found");
         bookingRepository.deleteById(id);
