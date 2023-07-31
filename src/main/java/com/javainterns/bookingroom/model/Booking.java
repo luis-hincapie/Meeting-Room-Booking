@@ -1,31 +1,48 @@
 package com.javainterns.bookingroom.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Booking {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(targetEntity = Room.class)
+    @ManyToOne(targetEntity = Room.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Room room;
 
-    @ManyToOne(targetEntity = User.class)
-    private User user;
+    @ManyToOne(targetEntity = Client.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Client client;
 
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private LocalTime startTime;
+    private Integer startTime;
 
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private LocalTime endTime;
+    private Integer endTime;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
@@ -50,27 +67,27 @@ public class Booking {
         this.room = room;
     }
 
-    public User getUser() {
-        return user;
+    public Client getUser() {
+        return client;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Client CLient) {
+        this.client = CLient;
     }
 
-    public LocalTime getStartTime() {
+    public Integer getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(Integer startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public Integer getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(Integer endTime) {
         this.endTime = endTime;
     }
 
@@ -82,9 +99,9 @@ public class Booking {
         this.date = date;
     }
 
-    public Booking(Room room, User user, LocalTime startTime, LocalTime endTime, LocalDate date) {
+    public Booking(Room room, Client Client, Integer startTime, Integer endTime, LocalDate date) {
         this.room = room;
-        this.user = user;
+        this.client = Client;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
