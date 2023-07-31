@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.util.function.Function;
 
 @Component
 public class BookingRequestMapper {
@@ -15,5 +16,15 @@ public class BookingRequestMapper {
         booking.setStartTime(bookingRequest.getStartTime());
         booking.setEndTime(bookingRequest.getEndTime());
         return booking;
+    }
+
+    public BookingRequest toBookingRequest(Booking booking){
+        BookingRequest bookingRequest = new BookingRequest();
+        bookingRequest.setDate(booking.getDate());
+        bookingRequest.setEndTime(booking.getEndTime());
+        bookingRequest.setStartTime(booking.getStartTime());
+        bookingRequest.setRoomId(booking.getRoom().getId());
+        bookingRequest.setUserId(booking.getUser().getId());
+        return bookingRequest;
     }
 }

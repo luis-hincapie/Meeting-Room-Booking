@@ -8,9 +8,9 @@ import com.javainterns.bookingroom.model.dto.BookingRequest;
 import org.springframework.stereotype.Service;
 
 public interface BookingService {
-    Booking create(BookingRequest bookingRequest);
-    Booking update(Booking booking);
+    BookingRequest create(BookingRequest bookingRequest);
+    BookingRequest update(Booking booking);
     Optional<Booking> findById(Long id);
     Boolean delete(Long id);
-    List<Booking> findAll();
+    List<BookingRequest> findAll();
 }

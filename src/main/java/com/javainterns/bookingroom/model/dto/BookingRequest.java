@@ -19,7 +19,7 @@ public class BookingRequest {
     @Size(min = 1, max = 24)
     private Integer endTime;
 
-    BookingRequest(){}
+    public BookingRequest(){}
 
     public Long getUserId() {
         return userId;
