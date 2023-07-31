@@ -16,12 +16,12 @@ public class RoomServiceImpl implements RoomService{
     @Autowired
     RoomRepository roomRepository;
     @Override
-    public void createRoom(Room room) {
+    public void create(Room room) {
         roomRepository.save(room);
     }
 
     @Override
-    public Optional<Room> getByIdRoom(long id) {
+    public Optional<Room> findById(long id) {
         Optional<Room> findUserOptional = roomRepository.findById(id);
         Room findUser = findUserOptional.orElseThrow(EntityNotFoundException::new);
         return Optional.ofNullable(findUser);
@@ -29,7 +29,7 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public List<Room> getRooms() {
+    public List<Room> findAll() {
 
         List<Room> room = new ArrayList();
         room = roomRepository.findAll();
@@ -37,12 +37,12 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public Room updateRoom(Room room) {
+    public Room update(Room room) {
         roomRepository.save(room);
         return room;
     }
     @Override
-    public void deleteRoom(Long id) {
+    public void delete(Long id) {
         roomRepository.deleteById(id);
     }
 

@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,27 +20,27 @@ public class RoomController {
 
     @PostMapping("/")
     public void create(@RequestBody Room room){
-        roomService.createRoom(room);
+        roomService.create(room);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Room>> findById( @PathVariable @NotNull Long id) {
-        return ResponseEntity.ok(roomService.getByIdRoom(id));
+        return ResponseEntity.ok(roomService.findById(id));
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Room>> findAll() {
-        return ResponseEntity.ok(roomService.getRooms());
+        return ResponseEntity.ok(roomService.findAll());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Room> update(@RequestBody Room room, @PathVariable @NotNull Long id) {
-        return ResponseEntity.ok(roomService.updateRoom(room));
+        return ResponseEntity.ok(roomService.update(room));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        roomService.deleteRoom(id);
+        roomService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
