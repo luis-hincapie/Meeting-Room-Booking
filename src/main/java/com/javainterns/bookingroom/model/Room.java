@@ -126,15 +126,7 @@ public class Room {
         isActive = active;
     }
 
-    @AssertTrue(message = "La hora final debe ser mayor que la hora de inicio")
-    public boolean isValidTimeRange(){
 
-        if(finishTime>startTime) {
-            return true;
-        }else {
-            return false;
-        }
-    }
 
 
 
