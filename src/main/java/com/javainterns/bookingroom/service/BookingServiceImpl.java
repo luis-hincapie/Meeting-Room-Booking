@@ -22,11 +22,13 @@ public class BookingServiceImpl implements BookingService{
     BookingRequestMapper bookingRequestMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    RoomService roomService;
     @Override
     public Booking create(BookingRequest bookingRequest) {
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
-        User user = new User("david", "david@gomez.com");
-        Room room = new Room("aula1", "medellin", 10, 5, 10);
+        User user = userService.findById(bookingRequest.getUserId()).get();
+        Room room = roomService.getByIdRoom(bookingRequest.getRoomId()).get();
         booking.setUser(user);
         booking.setRoom(room);
         return bookingRepository.save(booking);
