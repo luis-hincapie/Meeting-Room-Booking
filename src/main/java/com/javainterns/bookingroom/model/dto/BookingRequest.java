@@ -1,9 +1,10 @@
 package com.javainterns.bookingroom.model.dto;
 
+import java.time.LocalDate;
+
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.time.LocalDate;
 
 public class BookingRequest {
     @NotNull
@@ -11,15 +12,16 @@ public class BookingRequest {
     @NotNull
     private Long roomId;
     @NotNull
+    @FutureOrPresent(message = "Date error")
     private LocalDate date;
     @NotNull
     @Size(min = 0, max = 23)
     private Integer startTime;
     @NotNull
-    @Size(min = 1, max = 24)
+    @Size(min = 0, max = 23)
     private Integer endTime;
 
-    BookingRequest(){}
+    public BookingRequest(){}
 
     public Long getUserId() {
         return userId;

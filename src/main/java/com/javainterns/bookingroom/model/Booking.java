@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,13 +25,13 @@ public class Booking {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(targetEntity = Room.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Room.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Room room;
 
-    @ManyToOne(targetEntity = Client.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -99,9 +98,9 @@ public class Booking {
         this.date = date;
     }
 
-    public Booking(Room room, Client Client, Integer startTime, Integer endTime, LocalDate date) {
+    public Booking(Room room, Client client, Integer startTime, Integer endTime, LocalDate date) {
         this.room = room;
-        this.client = Client;
+        this.client = client;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
