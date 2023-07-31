@@ -28,7 +28,7 @@ public class BookingController {
     ClientService clientService;
 
     @GetMapping("/bookings")
-    public ResponseEntity<List<Booking>> bookingList(){
+    public ResponseEntity<List<BookingRequest>> bookingList(){
         return ResponseEntity.ok(bookingService.findAll());
     }
 
@@ -44,7 +44,7 @@ public class BookingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Booking> updateBooking(@RequestBody Booking booking, @PathVariable Long id){
+    public ResponseEntity<BookingRequest> updateBooking(@RequestBody Booking booking, @PathVariable Long id){
         return ResponseEntity.ok(bookingService.update(booking));
     }
 
