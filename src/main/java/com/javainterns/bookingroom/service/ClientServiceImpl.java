@@ -1,19 +1,14 @@
 package com.javainterns.bookingroom.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityNotFoundException;
-
 import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
+import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.model.dto.ClientRequest;
 import com.javainterns.bookingroom.model.mapper.ClientRequestMapper;
+import com.javainterns.bookingroom.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.javainterns.bookingroom.model.Client;
-import com.javainterns.bookingroom.repository.ClientRepository;
+import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -27,9 +22,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientRequest create(ClientRequest clientRequest) {
+    public Client create(ClientRequest clientRequest) {
         Client client = clientRequestMapper.toClient(clientRequest);
-        return clientRequestMapper.toClientRequest(clientRepository.save(client));
+        return clientRepository.save(client);
     }
 
     @Override
@@ -41,9 +36,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientRequest> findAll() {
-        return clientRepository.findAll().stream().map(x -> clientRequestMapper
-                .toClientRequest(x)).collect(Collectors.toList());
+    public List<Client> findAll() {
+        return clientRepository.findAll();
     }
 
     @Override

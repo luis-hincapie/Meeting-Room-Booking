@@ -1,9 +1,8 @@
 package com.javainterns.bookingroom.service;
-import java.util.List;
-import java.util.Optional;
 
-import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
+
+import java.util.List;
 
 public interface BookingService {
     BookingRequest create(BookingRequest bookingRequest);

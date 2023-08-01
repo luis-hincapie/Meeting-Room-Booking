@@ -1,26 +1,17 @@
 package com.javainterns.bookingroom.controller;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.model.dto.ClientRequest;
+import com.javainterns.bookingroom.service.ClientService;
+import com.javainterns.bookingroom.service.ClientServiceImpl;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.javainterns.bookingroom.model.Client;
-import com.javainterns.bookingroom.service.ClientService;
-import com.javainterns.bookingroom.service.ClientServiceImpl;
-
-import jakarta.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/clients")
@@ -33,7 +24,7 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClientRequest>> findAll() {
+    public ResponseEntity<List<Client>> findAll() {
         return ResponseEntity.ok(clientService.findAll());
     }
 
@@ -44,12 +35,12 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientRequest> create(@RequestBody ClientRequest clientRequest) {
+    public ResponseEntity<Client> create(@Valid @RequestBody ClientRequest clientRequest) {
         return ResponseEntity.ok(clientService.create(clientRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientRequest> update(@RequestBody Client client, @PathVariable @NotNull Long id) {
+    public ResponseEntity<ClientRequest> update(@Valid @RequestBody Client client, @PathVariable @NotNull Long id) {
         client.setId(id);
         return ResponseEntity.ok(clientService.update(client));
     }

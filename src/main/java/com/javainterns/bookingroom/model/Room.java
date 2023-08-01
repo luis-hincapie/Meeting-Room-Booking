@@ -1,18 +1,11 @@
 package com.javainterns.bookingroom.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
+
+import java.util.List;
 
 @Entity
 public class Room {

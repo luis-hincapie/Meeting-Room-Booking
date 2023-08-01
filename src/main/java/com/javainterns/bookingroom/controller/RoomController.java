@@ -20,22 +20,22 @@ public class RoomController {
     RoomService roomService;
 
     @GetMapping("/")
-    public ResponseEntity<List<RoomRequest>> findAll() {
+    public ResponseEntity<List<Room>> findAll() {
         return ResponseEntity.ok(roomService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomRequest> findById(@PathVariable @NotNull Long id) {
+    public ResponseEntity<Room> findById(@PathVariable @NotNull Long id) {
         return ResponseEntity.ok(roomService.findById(id));
     }
 
     @PostMapping("/")
-    public RoomRequest create(@RequestBody RoomRequest roomRequest) {
+    public Room create(@Valid @RequestBody RoomRequest roomRequest) {
         return roomService.create(roomRequest);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomRequest> update(@Valid @RequestBody Room room, @PathVariable @NotNull Long id) {
+    public ResponseEntity<Room> update(@Valid @RequestBody Room room, @PathVariable @NotNull Long id) {
         return ResponseEntity.ok(roomService.update(room));
     }
 

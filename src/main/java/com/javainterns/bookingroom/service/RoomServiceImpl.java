@@ -1,50 +1,44 @@
 package com.javainterns.bookingroom.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityNotFoundException;
-
 import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
+import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.RoomRequest;
 import com.javainterns.bookingroom.model.mapper.RoomRequestMapper;
+import com.javainterns.bookingroom.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.javainterns.bookingroom.model.Room;
-import com.javainterns.bookingroom.repository.RoomRepository;
+import java.util.List;
 
 @Service
-public class RoomServiceImpl implements RoomService{
+public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomRepository roomRepository;
     @Autowired
     RoomRequestMapper roomRequestMapper;
+
     @Override
-    public RoomRequest create(RoomRequest roomRequest) {
+    public Room create(RoomRequest roomRequest) {
         Room room = roomRequestMapper.toRoom(roomRequest);
-        return  roomRequestMapper.toRoomRequest(roomRepository.save(room));
+        return roomRepository.save(room);
     }
 
     @Override
-    public RoomRequest findById(Long id) {
-        return roomRequestMapper.toRoomRequest(
-                roomRepository.findById(id).orElseThrow(
-                        ()->new NoRecordFoundException("Room Record Not Found")));
+    public Room findById(Long id) {
+        return roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Room Record Not Found"));
 
     }
 
     @Override
-    public List<RoomRequest> findAll() {
-        return roomRepository.findAll().stream().map(x -> roomRequestMapper
-                        .toRoomRequest(x)).collect(Collectors.toList());
+    public List<Room> findAll() {
+        return roomRepository.findAll();
     }
 
     @Override
-    public RoomRequest update(Room room) {
-        return roomRequestMapper.toRoomRequest( roomRepository.save(room));
+    public Room update(Room room) {
+        return roomRepository.save(room);
     }
+
     @Override
     public void delete(Long id) {
         if (!roomRepository.existsById(id)) throw new NoRecordFoundException("Room Record Not Found");
@@ -53,7 +47,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public Room findRoom(Long id) {
-        return roomRepository.findById(id).orElseThrow(()-> new NoRecordFoundException("Room Record Not Found"));
+        return roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Room Record Not Found"));
 
     }
 
