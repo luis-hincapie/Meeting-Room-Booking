@@ -28,8 +28,8 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingRequest create(BookingRequest bookingRequest) {
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
-        Client client = clientService.findById(bookingRequest.getUserId()).get();
-        Room room = roomService.findById(bookingRequest.getRoomId()).get();
+        Client client = clientService.findClient(bookingRequest.getUserId());
+        Room room = roomService.findRoom(bookingRequest.getRoomId());
         booking.setUser(client);
         booking.setRoom(room);
         return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
