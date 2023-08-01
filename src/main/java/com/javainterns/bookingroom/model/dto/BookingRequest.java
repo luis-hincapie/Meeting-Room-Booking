@@ -2,24 +2,28 @@ package com.javainterns.bookingroom.model.dto;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Range;
 
 public class BookingRequest {
     private Long id;
-    @NotNull
+    @NotNull(message="User Id must not be null")
+    @Range(min = 0, message = "User Id must be greater than 0")
     private Long userId;
-    @NotNull
+    @NotNull(message="Room Id must not be null")
+    @Range(min = 0, message = "Room Id must be greater than 0")
     private Long roomId;
-    @NotNull
+    @NotNull(message="Date must not be null")
     @FutureOrPresent(message = "Date error")
     private LocalDate date;
-    @NotNull
-    @Size(min = 0, max = 23)
+    @NotEmpty(message="Start Time must not be null")
+    @Range(min = 0,max = 23, message = "Start time must be between 0 and 23")
+    @Schema(example = "5")
     private Integer startTime;
-    @NotNull
-    @Size(min = 0, max = 23)
+    @NotEmpty(message="End Time must not be null")
+    @Range(min = 0,max = 23, message = "End time must be between 0 and 23")
+    @Schema(example = "20")
     private Integer endTime;
 
     public BookingRequest(){}
