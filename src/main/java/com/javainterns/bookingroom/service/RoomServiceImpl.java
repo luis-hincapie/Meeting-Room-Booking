@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
 import com.javainterns.bookingroom.model.dto.RoomRequest;
 import com.javainterns.bookingroom.model.mapper.RoomRequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public RoomRequest findById(Long id) {
-        Optional<Room> findUserOptional = roomRepository.findById(id);
-        Room findUser = findUserOptional.orElseThrow(EntityNotFoundException::new);
-        return roomRequestMapper.toRoomRequest(findUser);
+        return roomRequestMapper.toRoomRequest(
+                roomRepository.findById(id).orElseThrow(
+                        ()->new NoRecordFoundException("Room Record Not Found")));
 
     }
 
@@ -46,13 +47,13 @@ public class RoomServiceImpl implements RoomService{
     }
     @Override
     public void delete(Long id) {
+        if (!roomRepository.existsById(id)) throw new NoRecordFoundException("Room Record Not Found");
         roomRepository.deleteById(id);
     }
 
     @Override
     public Room findRoom(Long id) {
-        Optional<Room> findUserOptional = roomRepository.findById(id);
-        return findUserOptional.orElseThrow(EntityNotFoundException::new);
+        return roomRepository.findById(id).orElseThrow(()-> new NoRecordFoundException("Room Record Not Found"));
 
     }
 

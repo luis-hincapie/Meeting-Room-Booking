@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
 import com.javainterns.bookingroom.model.dto.ClientRequest;
 import com.javainterns.bookingroom.model.mapper.ClientRequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientRequest findById(Long id) {
-        Optional<Client> findUserOptional = clientRepository.findById(id);
-        Client findClient = findUserOptional.orElseThrow(EntityNotFoundException::new);
-        return clientRequestMapper.toClientRequest(findClient);
+        return clientRequestMapper.toClientRequest(
+                clientRepository.findById(id).orElseThrow(
+                        ()->new NoRecordFoundException("Client Record Not Found")));
 
     }
 
@@ -46,6 +47,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void delete(Long id) {
+        if (!clientRepository.existsById(id)) throw new NoRecordFoundException("Client Record Not Found");
         clientRepository.deleteById(id);
     }
 
@@ -56,7 +58,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client findClient(Long id) {
-        Optional<Client> findUserOptional = clientRepository.findById(id);
-        return findUserOptional.orElseThrow(EntityNotFoundException::new);
+        return clientRepository.findById(id).orElseThrow(()-> new NoRecordFoundException("Client Record Not Found"));
     }
 }

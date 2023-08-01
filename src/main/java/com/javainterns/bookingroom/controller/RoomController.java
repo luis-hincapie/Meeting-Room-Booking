@@ -4,6 +4,7 @@ package com.javainterns.bookingroom.controller;
 import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.RoomRequest;
 import com.javainterns.bookingroom.service.RoomService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Room> update(@Valid @RequestBody Room room, @PathVariable @NotNull Long id) {
+    public ResponseEntity<RoomRequest> update(@Valid @RequestBody Room room, @PathVariable @NotNull Long id) {
         return ResponseEntity.ok(roomService.update(room));
     }
 
