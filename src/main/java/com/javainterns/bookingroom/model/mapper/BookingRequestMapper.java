@@ -20,6 +20,7 @@ public class BookingRequestMapper {
 
     public BookingRequest toBookingRequest(Booking booking){
         BookingRequest bookingRequest = new BookingRequest();
+        bookingRequest.setId(booking.getId());
         bookingRequest.setDate(booking.getDate());
         bookingRequest.setEndTime(booking.getEndTime());
         bookingRequest.setStartTime(booking.getStartTime());

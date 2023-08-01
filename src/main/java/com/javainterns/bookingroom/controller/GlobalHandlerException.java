@@ -21,6 +21,6 @@ public class GlobalHandlerException {
     @ExceptionHandler(StartTimeIsGreaterThanEndTime.class)
     @ResponseBody
     public ResponseEntity<String> stratTiemIsGreaterThanEndTime(StartTimeIsGreaterThanEndTime exception){
-        return new ResponseEntity<String>("startTime could not be greater than finishTime", HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity<String>(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 }

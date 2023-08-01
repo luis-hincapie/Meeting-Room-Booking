@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class BookingRequest {
+    private Long id;
     @NotNull
     private Long userId;
     @NotNull
@@ -22,6 +23,10 @@ public class BookingRequest {
     private Integer endTime;
 
     public BookingRequest(){}
+
+    public Long getId() {
+        return id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -41,6 +46,10 @@ public class BookingRequest {
 
     public Integer getEndTime() {
         return endTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setUserId(Long userId) {

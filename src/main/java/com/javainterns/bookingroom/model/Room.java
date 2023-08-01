@@ -123,14 +123,10 @@ public class Room {
         isActive = active;
     }
 
-    @AssertTrue(message = "startday could not be greater than endday")
+    @AssertTrue()
     public boolean isValidTimeRange(){
-
-        if(finishTime>startTime) {
-            return true;
-        }else {
-            throw new StartTimeIsGreaterThanEndTime();
-        }
+        if(finishTime>startTime || (finishTime==0 && startTime !=0)) return true;
+        throw new StartTimeIsGreaterThanEndTime("startTime could not be greater than finishTime");
     }
 
 
