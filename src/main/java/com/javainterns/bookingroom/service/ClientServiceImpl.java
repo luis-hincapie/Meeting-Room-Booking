@@ -21,8 +21,9 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
     private ClientRequestMapper clientRequestMapper;
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository){
+    public ClientServiceImpl(ClientRepository clientRepository, ClientRequestMapper clientRequestMapper){
         this.clientRepository = clientRepository;
+        this.clientRequestMapper = clientRequestMapper;
     }
 
     @Override
