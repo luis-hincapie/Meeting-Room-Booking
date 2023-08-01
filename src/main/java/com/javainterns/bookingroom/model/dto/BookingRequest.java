@@ -4,24 +4,25 @@ import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Range;
 
 public class BookingRequest {
     private Long id;
-    @NotNull
+    @NotNull(message="User Id must not be null")
+    @Range(min = 0, message = "User Id must be greater than 0")
     private Long userId;
-    @NotNull
+    @NotNull(message="Room Id must not be null")
+    @Range(min = 0, message = "Room Id must be greater than 0")
     private Long roomId;
-    @NotNull
+    @NotNull(message="Date must not be null")
     @FutureOrPresent(message = "Date error")
     private LocalDate date;
-    @NotEmpty
-    @Size(max = 23)
-    @PositiveOrZero
+    @NotEmpty(message="Start Time must not be null")
+    @Range(min = 0,max = 23, message = "Start time must be between 0 and 23")
     @Schema(example = "5")
     private Integer startTime;
-    @NotEmpty
-    @Size(max = 23)
-    @PositiveOrZero
+    @NotEmpty(message="End Time must not be null")
+    @Range(min = 0,max = 23, message = "End time must be between 0 and 23")
     @Schema(example = "20")
     private Integer endTime;
 
