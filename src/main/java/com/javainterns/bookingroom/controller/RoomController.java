@@ -1,47 +1,36 @@
 package com.javainterns.bookingroom.controller;
 
+
 import com.javainterns.bookingroom.model.Room;
+import com.javainterns.bookingroom.model.dto.RoomRequest;
 import com.javainterns.bookingroom.service.RoomService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Validated
-@RequestMapping(path = "/room")
+@RequestMapping(path = "/rooms")
 public class RoomController {
     @Autowired
     RoomService roomService;
 
-    @PostMapping("/")
-    public void create(@Valid @RequestBody Room room) {
-
-        roomService.create(room);
+    @GetMapping("/")
+    public ResponseEntity<List<RoomRequest>> findAll() {
+        return ResponseEntity.ok(roomService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Room>> findById( @PathVariable @NotNull Long id) {
+    public ResponseEntity<RoomRequest> findById(@PathVariable @NotNull Long id) {
         return ResponseEntity.ok(roomService.findById(id));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<Room>> findAll() {
-        return ResponseEntity.ok(roomService.findAll());
+    @PostMapping("/")
+    public RoomRequest create(@RequestBody RoomRequest roomRequest) {
+        return roomService.create(roomRequest);
     }
 
     @PutMapping("/{id}")
@@ -54,7 +43,6 @@ public class RoomController {
         roomService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 
 }

@@ -1,9 +1,9 @@
 package com.javainterns.bookingroom.model;
 
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
-import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,9 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Min;
 
 @Entity
 public class Room {
@@ -31,16 +28,13 @@ public class Room {
     private Integer capacity;
 
     @Column(nullable = false)
-    @Min(value = 5)
-    @Valid
     private Integer startTime;
 
     @Column(nullable = false)
-    @Valid
     private Integer finishTime;
 
     @Column(nullable = false)
-    private boolean isActive;
+    private Boolean isActive;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -57,6 +51,15 @@ public class Room {
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.isActive = true;
+    }
+
+    public Room( String name, String location, Integer capacity, Integer startTime, Integer finishTime, Boolean isActive) {
+        this.name = name;
+        this.location = location;
+        this.capacity = capacity;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.isActive = isActive;
     }
 
     public Long getId() {
