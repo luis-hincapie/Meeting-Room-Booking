@@ -2,8 +2,9 @@ package com.javainterns.bookingroom.model.dto;
 
 import java.time.LocalDate;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class BookingRequest {
     private Long id;
@@ -14,15 +15,11 @@ public class BookingRequest {
     @NotNull
     @FutureOrPresent(message = "Date error")
     private LocalDate date;
-    @NotEmpty
-    @Size(max = 23)
-    @PositiveOrZero
-    @Schema(example = "5")
+    @NotNull
+    @Size(min = 0, max = 23)
     private Integer startTime;
-    @NotEmpty
-    @Size(max = 23)
-    @PositiveOrZero
-    @Schema(example = "20")
+    @NotNull
+    @Size(min = 0, max = 23)
     private Integer endTime;
 
     public BookingRequest(){}

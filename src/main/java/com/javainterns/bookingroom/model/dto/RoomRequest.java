@@ -1,36 +1,32 @@
 package com.javainterns.bookingroom.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 public class RoomRequest {
 
-    @NotBlank
+    @NotBlank(message = "Name must not be blank")
     @Schema(example = "Room 1")
-    @Size(max = 100)
+    @Size(max = 100,message = "Name size must be between 0 and 100")
     private String name;
 
 
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "Location must not be blank")
+    @Size(max = 100, message = "Location size must be between 0 and 100")
     @Schema(example = "Medellín")
     private String location;
 
-    @NotEmpty
-    @Size(max = 999)
-    @Positive
+    @Range(min =0,max = 999, message= "Capacity must be between 0 and 999")
     @Schema(example = "3")
     private Integer capacity;
 
-    @NotEmpty
-    @Size(max = 23)
-    @PositiveOrZero
+    @Range(min=0,max = 23,message = "Start time must be between 0 and 23")
     @Schema(example = "5")
     private Integer startTime;
 
-    @NotEmpty
-    @Size(max = 23)
-    @PositiveOrZero
+    @Range(min=0,max = 23,message = "End time must be between 0 and 23")
     @Schema(example = "20")
     private Integer finishTime;
 

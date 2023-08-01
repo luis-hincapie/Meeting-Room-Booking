@@ -6,15 +6,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class ClientRequest {
-    @NotBlank
+import java.io.Serializable;
+
+public class ClientRequest implements Serializable {
+    @NotBlank(message = "Name must not be blank")
     @Schema(example = "Room 1")
-    @Size(max = 100)
+    @Size(max = 100,message = "Name size must be between 0 and 100")
     private String name;
-    @Email
-    @NotBlank
+    @Email(message = "Email invalid format")
+    @NotBlank(message = "Email must not be blank")
+    @Size(max = 100,message = "Email size must be between 0 and 100")
     @Schema(example = "example@email.com")
-    @Size(max = 100)
     private String email;
 
     public String getName() {
