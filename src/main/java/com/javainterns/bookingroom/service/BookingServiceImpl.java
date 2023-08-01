@@ -51,9 +51,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingRequest> findAll() {
-        List<Booking> bookingList = bookingRepository.findAll();
-        if(bookingList.isEmpty()) throw new NoRecordFoundException("Booking Record Not Found");
-        return bookingList.stream().map(x -> bookingRequestMapper
-                .toBookingRequest(x)).collect(Collectors.toList());
+        return bookingRepository.findAll().stream().map(
+                x -> bookingRequestMapper.toBookingRequest(x)).collect(Collectors.toList());
     }
 }
