@@ -7,8 +7,12 @@ import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
 import com.javainterns.bookingroom.repository.BookingRepository;
+import com.javainterns.bookingroom.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +29,9 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     RoomService roomService;
 
+    @Autowired
+    private Messages messages;
+
     @Override
     public BookingRequest create(BookingRequest bookingRequest) {
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
@@ -37,7 +44,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Boolean delete(Long id) {
-        if (!bookingRepository.existsById(id)) throw new NoRecordFoundException("Booking Record Not Found");
+        if (!bookingRepository.existsById(id)) throw new NoRecordFoundException(messages.get("booking.record.not.found"));
         bookingRepository.deleteById(id);
         return true;
     }
