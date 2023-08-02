@@ -1,10 +1,12 @@
 package com.javainterns.bookingroom.service;
 
 import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
+import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.RoomRequest;
 import com.javainterns.bookingroom.model.mapper.RoomRequestMapper;
 import com.javainterns.bookingroom.repository.RoomRepository;
+import com.javainterns.bookingroom.utils.TimeValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,29 +19,35 @@ public class RoomServiceImpl implements RoomService {
     RoomRepository roomRepository;
     @Autowired
     RoomRequestMapper roomRequestMapper;
+    @Autowired
+    TimeValidation timevalidation;
 
     @Override
-    public Room create(RoomRequest roomRequest) {
+    public RoomRequest create(RoomRequest roomRequest) {
+        if(!timevalidation.isValidTimeRange(roomRequest.getFinishTime(),roomRequest.getStartTime()))
+            throw new StartTimeIsGreaterThanEndTime("startTime could not be greater than finishTime");
         Room room = roomRequestMapper.toRoom(roomRequest);
-        return roomRepository.save(room);
+        return roomRequestMapper.toRoomRequest(roomRepository.save(room));
     }
 
     @Override
-    public Room findById(Long id) {
+    public RoomRequest findById(Long id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Room Record Not Found"));
         if(!room.isActive()) throw  new NoRecordFoundException("Room Record Not Found");
-        return room;
-
+        return roomRequestMapper.toRoomRequest(room);
     }
 
     @Override
-    public List<Room> findAll() {
-        return roomRepository.findAll().stream().filter(x ->x.isActive()).collect(Collectors.toList());
+    public List<RoomRequest> findAll() {
+        return roomRepository.findAll().stream().filter(x ->x.isActive()).map(x -> roomRequestMapper.toRoomRequest(x)).collect(Collectors.toList());
     }
 
     @Override
-    public Room update(Room room) {
-        return roomRepository.save(room);
+    public RoomRequest update(RoomRequest roomRequest) {
+        if(!timevalidation.isValidTimeRange(roomRequest.getFinishTime(),roomRequest.getStartTime()))
+            throw new StartTimeIsGreaterThanEndTime("startTime could not be greater than finishTime");
+        Room room = roomRequestMapper.toRoom(findById(roomRequest.getId()));
+        return roomRequestMapper.toRoomRequest(roomRepository.save(room));
     }
 
     @Override
@@ -48,10 +56,5 @@ public class RoomServiceImpl implements RoomService {
         roomRepository.deleteById(id);
     }
 
-    @Override
-    public Room findRoom(Long id) {
-        return roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Room Record Not Found"));
-
-    }
 
 }

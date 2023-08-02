@@ -122,13 +122,5 @@ public class Room {
         isActive = active;
     }
 
-    @JsonIgnore
-    @AssertTrue()
-    public boolean isValidTimeRange(){
-        if(finishTime<=startTime || (finishTime==0 && startTime !=0)) return true;
-        throw new StartTimeIsGreaterThanEndTime("startTime could not be greater than finishTime");
-    }
-
-
 
 }
