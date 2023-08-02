@@ -9,35 +9,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService {
 
     private ClientRepository clientRepository;
     private ClientRequestMapper clientRequestMapper;
+
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository, ClientRequestMapper clientRequestMapper){
+    public ClientServiceImpl(ClientRepository clientRepository, ClientRequestMapper clientRequestMapper) {
         this.clientRepository = clientRepository;
         this.clientRequestMapper = clientRequestMapper;
     }
 
     @Override
-    public Client create(ClientRequest clientRequest) {
+    public ClientRequest create(ClientRequest clientRequest) {
         Client client = clientRequestMapper.toClient(clientRequest);
-        return clientRepository.save(client);
+        return clientRequestMapper.toClientRequest(clientRepository.save(client));
     }
 
     @Override
     public ClientRequest findById(Long id) {
-        return clientRequestMapper.toClientRequest(
-                clientRepository.findById(id).orElseThrow(
-                        ()->new NoRecordFoundException("Client Record Not Found")));
+        return clientRequestMapper.toClientRequest(clientRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Client Record Not Found")));
 
     }
 
     @Override
-    public List<Client> findAll() {
-        return clientRepository.findAll();
+    public List<ClientRequest> findAll() {
+        return clientRepository.findAll().stream().map(x -> clientRequestMapper.toClientRequest(x)).collect(Collectors.toList());
     }
 
     @Override
@@ -47,12 +47,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientRequest update(Client CLient) {
-        return clientRequestMapper.toClientRequest(clientRepository.save(CLient));
+    public ClientRequest update(ClientRequest clientRequest) {
+        Client client = clientRequestMapper.toClient(findById(clientRequest.getId()));
+        return clientRequestMapper.toClientRequest(clientRepository.save(client));
     }
 
-    @Override
-    public Client findClient(Long id) {
-        return clientRepository.findById(id).orElseThrow(()-> new NoRecordFoundException("Client Record Not Found"));
-    }
 }

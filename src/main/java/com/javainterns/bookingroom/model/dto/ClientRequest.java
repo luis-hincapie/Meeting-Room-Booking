@@ -1,16 +1,20 @@
 package com.javainterns.bookingroom.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.io.Serializable;
+public class ClientRequest {
 
-public class ClientRequest implements Serializable {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long id;
     @NotBlank(message = "Name must not be blank")
-    @Schema(example = "Room 1")
+    @Schema(example = "David")
     @Size(max = 100,message = "Name size must be between 0 and 100")
     private String name;
     @Email(message = "Email invalid format")
@@ -35,12 +39,19 @@ public class ClientRequest implements Serializable {
         this.email = email;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public ClientRequest(@NotNull String name, @NotNull String email) {
         this.name = name;
         this.email = email;
     }
 
     public ClientRequest() {
-
     }
 }

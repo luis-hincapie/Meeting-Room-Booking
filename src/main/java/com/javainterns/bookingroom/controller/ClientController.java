@@ -24,7 +24,7 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Client>> findAll() {
+    public ResponseEntity<List<ClientRequest>> findAll() {
         return ResponseEntity.ok(clientService.findAll());
     }
 
@@ -35,20 +35,19 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> create(@Valid @RequestBody ClientRequest clientRequest) {
+    public ResponseEntity<ClientRequest> create(@Valid @RequestBody ClientRequest clientRequest) {
         return ResponseEntity.ok(clientService.create(clientRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientRequest> update(@Valid @RequestBody Client client, @PathVariable @NotNull Long id) {
-        client.setId(id);
-        return ResponseEntity.ok(clientService.update(client));
+    public ResponseEntity<ClientRequest> update(@Valid @RequestBody ClientRequest clientRequest, @PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(clientService.update(clientRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         clientService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
