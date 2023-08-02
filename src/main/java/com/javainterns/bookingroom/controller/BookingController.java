@@ -1,8 +1,10 @@
 package com.javainterns.bookingroom.controller;
 
+import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.service.BookingService;
 import com.javainterns.bookingroom.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,7 @@ public class BookingController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<BookingRequest> createBooking(@RequestBody BookingRequest bookingRequest){
+    public ResponseEntity<BookingRequest> createBooking(@Valid @RequestBody BookingRequest bookingRequest){
         return ResponseEntity.ok(bookingService.create(bookingRequest));
     }
 }

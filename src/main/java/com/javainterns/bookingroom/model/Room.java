@@ -1,6 +1,7 @@
 package com.javainterns.bookingroom.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
@@ -121,9 +122,10 @@ public class Room {
         isActive = active;
     }
 
+    @JsonIgnore
     @AssertTrue()
     public boolean isValidTimeRange(){
-        if(finishTime>startTime || (finishTime==0 && startTime !=0)) return true;
+        if(finishTime<=startTime || (finishTime==0 && startTime !=0)) return true;
         throw new StartTimeIsGreaterThanEndTime("startTime could not be greater than finishTime");
     }
 

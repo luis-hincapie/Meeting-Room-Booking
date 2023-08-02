@@ -1,9 +1,6 @@
 package com.javainterns.bookingroom.controller;
 
-import com.javainterns.bookingroom.exceptions.HoursOfOperationNotAvailableException;
-import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
-import com.javainterns.bookingroom.exceptions.RoomAlreadyBooked;
-import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
+import com.javainterns.bookingroom.exceptions.*;
 import jakarta.validation.UnexpectedTypeException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -75,13 +72,22 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(UnexpectedTypeException.class)
-    public ResponseEntity<Map<String,String>> handleValidationException(UnexpectedTypeException ex) {
+    public ResponseEntity<Map<String,String>> handleValidationException(UnexpectedTypeException exception) {
         Map<String, String> response = new LinkedHashMap<>();
         response.put("timestamp", new Date().toString());
         response.put("status", HttpStatus.BAD_REQUEST.toString());
         response.put("error", "Argument Not Valid");
-        response.put("message",ex.getMessage());
+        response.put("message",exception.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidDataException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidDataException(InvalidDataException exception){
+        Map<String, String> response = new LinkedHashMap<>();
+        response.put("timestamp", new Date().toString());
+        response.put("status", HttpStatus.BAD_REQUEST.toString());
+        response.put("error", "Argument Not Valid");
+        response.put("message",exception.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

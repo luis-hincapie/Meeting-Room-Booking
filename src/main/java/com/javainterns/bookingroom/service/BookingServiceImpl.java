@@ -32,12 +32,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingRequest create(BookingRequest bookingRequest) {
+        Client client = clientService.findClient(bookingRequest.getUserId());
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
         Room room = roomService.findRoom(bookingRequest.getRoomId());
         List<Booking> bookingList = bookingRepository.findBookingsByRoomIdAndDate(booking.getDate(),room.getId());
         if (!bookingHourValidation(booking,bookingList)) throw new RoomAlreadyBooked(room.getId().toString());
         if (!bookingRoomHourValidation(booking, room)) throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
-        Client client = clientService.findClient(bookingRequest.getUserId());
         booking.setUser(client);
         booking.setRoom(room);
         return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));

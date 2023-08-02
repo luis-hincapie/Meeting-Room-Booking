@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -25,13 +26,15 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room findById(Long id) {
-        return roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Room Record Not Found"));
+        Room room = roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException("Room Record Not Found"));
+        if(!room.isActive()) throw  new NoRecordFoundException("Room Record Not Found");
+        return room;
 
     }
 
     @Override
     public List<Room> findAll() {
-        return roomRepository.findAll();
+        return roomRepository.findAll().stream().filter(x ->x.isActive()).collect(Collectors.toList());
     }
 
     @Override

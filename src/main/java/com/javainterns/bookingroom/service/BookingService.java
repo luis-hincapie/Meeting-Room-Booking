@@ -1,6 +1,7 @@
 package com.javainterns.bookingroom.service;
 
 import com.javainterns.bookingroom.model.dto.BookingRequest;
+import com.javainterns.bookingroom.repository.BookingRepository;
 
 import java.util.List;
 
