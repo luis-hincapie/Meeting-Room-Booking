@@ -19,6 +19,7 @@ public class RoomRequestMapper {
 
     public RoomRequest toRoomRequest(Room room) {
         return new RoomRequest(
+                room.getId(),
                 room.getName(),
                 room.getLocation(),
                 room.getCapacity(),
