@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping(path = "/clients")
 public class ClientController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
     @Autowired
     public ClientController(ClientServiceImpl clientService) {
         this.clientService = clientService;
@@ -48,7 +48,7 @@ public class ClientController {
 
     @Operation(summary = "Get a client by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Client found"),
+            @ApiResponse(responseCode = "201", description = "Client created"),
             @ApiResponse(responseCode = "404", description = "Client not found",content = @Content(schema = @Schema(implementation = Void.class)))
     })
     @PostMapping
@@ -58,11 +58,12 @@ public class ClientController {
     
     @Operation(summary = "Create a client")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Client updated"),
+            @ApiResponse(responseCode = "201", description = "Client updated"),
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content(schema = @Schema(implementation = Void.class))),
     })
     @PutMapping("/{id}")
     public ResponseEntity<ClientRequest> update(@Valid @RequestBody ClientRequest clientRequest, @PathVariable @NotNull Long id) {
+        clientRequest.setId(id);
         return ResponseEntity.ok(clientService.update(clientRequest));
     }
 

@@ -45,7 +45,7 @@ public class RoomController {
 
     @Operation(summary = "Create a room")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Room created"),
+            @ApiResponse(responseCode = "201", description = "Room created"),
             @ApiResponse(responseCode = "404", description = "Room not found", content = @Content(schema = @Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "400", description = "Start time must not be greater than end time", content = @Content(schema = @Schema(implementation = Void.class)))
     })
@@ -56,7 +56,7 @@ public class RoomController {
 
     @Operation(summary = "Update a room")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Room updated"),
+            @ApiResponse(responseCode = "201", description = "Room updated"),
             @ApiResponse(responseCode = "404", description = "Room not found", content = @Content(schema = @Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "400", description = "Start time must not be greater than end time", content = @Content(schema = @Schema(implementation = Void.class)))
     })

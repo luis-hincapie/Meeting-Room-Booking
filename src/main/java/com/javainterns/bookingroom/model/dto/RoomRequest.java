@@ -94,6 +94,9 @@ public class RoomRequest {
         isActive = active;
     }
 
+    public RoomRequest() {
+    }
+
     public RoomRequest(String name, String location, Integer capacity, Integer startTime, Integer finishTime, Boolean isActive) {
         this.name = name;
         this.location = location;
