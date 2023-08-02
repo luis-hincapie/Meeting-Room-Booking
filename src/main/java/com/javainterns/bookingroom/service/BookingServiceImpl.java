@@ -8,6 +8,7 @@ import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
+import com.javainterns.bookingroom.model.mapper.RoomRequestMapper;
 import com.javainterns.bookingroom.model.mapper.ClientRequestMapper;
 import com.javainterns.bookingroom.repository.BookingRepository;
 import com.javainterns.bookingroom.utils.Messages;
@@ -31,6 +32,8 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     TimeValidation timeValidation;
     @Autowired
+    RoomRequestMapper roomRequestMapper;
+    @Autowired
     private Messages messages;
     @Autowired
     private ClientRequestMapper clientRequestMapper;
@@ -40,7 +43,7 @@ public class BookingServiceImpl implements BookingService {
         Client client = clientRequestMapper.toClient(clientService.findById(bookingRequest.getUserId()));
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
         timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime());
-        Room room = roomService.findRoom(bookingRequest.getRoomId());
+        Room room = roomRequestMapper.toRoom(roomService.findById(bookingRequest.getRoomId()));
         List<Booking> bookingList = bookingRepository.findBookingsByRoomIdAndDate(booking.getDate(),room.getId());
         if (!timeValidation.bookingHourValidation(booking,bookingList)) throw new RoomAlreadyBooked(room.getId().toString());
         if (!timeValidation.bookingRoomHourValidation(booking, room)) throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");

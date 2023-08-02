@@ -20,29 +20,29 @@ public class RoomController {
     RoomService roomService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Room>> findAll() {
+    public ResponseEntity<List<RoomRequest>> findAll() {
         return ResponseEntity.ok(roomService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Room> findById(@PathVariable @NotNull Long id) {
+    public ResponseEntity<RoomRequest> findById(@PathVariable @NotNull Long id) {
         return ResponseEntity.ok(roomService.findById(id));
     }
 
     @PostMapping("/")
-    public Room create(@Valid @RequestBody RoomRequest roomRequest) {
-        return roomService.create(roomRequest);
+    public ResponseEntity<RoomRequest> create(@Valid @RequestBody RoomRequest roomRequest) {
+        return ResponseEntity.ok(roomService.create(roomRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Room> update(@Valid @RequestBody Room room, @PathVariable @NotNull Long id) {
-        return ResponseEntity.ok(roomService.update(room));
+    public ResponseEntity<RoomRequest> update(@Valid @RequestBody RoomRequest roomRequest, @PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(roomService.update(roomRequest));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         roomService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
