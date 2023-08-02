@@ -26,19 +26,19 @@ public class BookingController {
     @Autowired
     ClientService clientService;
 
-    @Operation(summary = "Get all users")
+    @Operation(summary = "Get all bookings")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Users found"),
+            @ApiResponse(responseCode = "200", description = "Booking found"),
     })
     @GetMapping("/")
     public ResponseEntity<List<BookingRequest>> bookingList(){
         return ResponseEntity.ok(bookingService.findAll());
     }
 
-    @Operation(summary = "Delete an user by ID")
+    @Operation(summary = "Delete an booking by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User deleted"),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = Void.class))),
+            @ApiResponse(responseCode = "200", description = "Booking deleted"),
+            @ApiResponse(responseCode = "404", description = "Booking not found", content = @Content(schema = @Schema(implementation = Void.class))),
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBooking(@PathVariable Long id){
@@ -46,10 +46,10 @@ public class BookingController {
         return new ResponseEntity<String>("Booking deleted",HttpStatus.OK);
     }
 
-    @Operation(summary = "Get an user by ID")
+    @Operation(summary = "Get a booking by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User found"),
-            @ApiResponse(responseCode = "404", description = "User not found",content = @Content(schema = @Schema(implementation = Void.class)))
+            @ApiResponse(responseCode = "200", description = "Booking found"),
+            @ApiResponse(responseCode = "404", description = "Booking not found",content = @Content(schema = @Schema(implementation = Void.class)))
     })
     @GetMapping("/{id}")
     public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id){
@@ -58,7 +58,7 @@ public class BookingController {
 
     @Operation(summary = "Create an user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User created"),
+            @ApiResponse(responseCode = "200", description = "Booking created"),
             @ApiResponse(responseCode = "404", description = "User not found\t\nRoom not found", content = @Content(schema = @Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "400", description = "Start time must not be greater than end time", content = @Content(schema = @Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "409", description = "Room booked\t\nRoom won't be open at this time", content = @Content(schema = @Schema(implementation = Void.class)))
