@@ -6,10 +6,9 @@ import com.javainterns.bookingroom.model.dto.ClientRequest;
 import java.util.List;
 
 public interface ClientService {
-    Client create(ClientRequest clientRequest);
+    ClientRequest create(ClientRequest clientRequest);
     ClientRequest findById(Long id);
-    List<Client> findAll();
+    List<ClientRequest> findAll();
     void delete(Long id);
-    ClientRequest update(Client client);
-    Client findClient(Long id);
+    ClientRequest update(ClientRequest clientRequest);
 }
