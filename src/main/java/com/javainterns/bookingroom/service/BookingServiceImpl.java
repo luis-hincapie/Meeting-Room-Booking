@@ -8,6 +8,7 @@ import com.javainterns.bookingroom.model.Client;
 import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
+import com.javainterns.bookingroom.model.mapper.ClientRequestMapper;
 import com.javainterns.bookingroom.repository.BookingRepository;
 import com.javainterns.bookingroom.utils.Messages;
 import com.javainterns.bookingroom.utils.TimeValidation;
@@ -31,10 +32,12 @@ public class BookingServiceImpl implements BookingService {
     TimeValidation timeValidation;
     @Autowired
     private Messages messages;
+    @Autowired
+    private ClientRequestMapper clientRequestMapper;
 
     @Override
     public BookingRequest create(BookingRequest bookingRequest) {
-        Client client = clientService.findClient(bookingRequest.getUserId());
+        Client client = clientRequestMapper.toClient(clientService.findById(bookingRequest.getUserId()));
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
         timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime());
         Room room = roomService.findRoom(bookingRequest.getRoomId());
