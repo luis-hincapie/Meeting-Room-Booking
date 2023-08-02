@@ -1,15 +1,13 @@
 package com.javainterns.bookingroom.model.dto;
-import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.javainterns.bookingroom.exceptions.InvalidDataException;
-import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.time.LocalDate;
 
 public class BookingRequest {
     @JsonInclude(JsonInclude.Include.NON_NULL)

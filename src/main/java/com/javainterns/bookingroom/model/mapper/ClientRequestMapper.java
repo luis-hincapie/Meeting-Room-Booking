@@ -12,6 +12,6 @@ public class ClientRequestMapper {
     }
 
     public ClientRequest toClientRequest(Client client) {
-        return new ClientRequest(client.getName(), client.getEmail());
+        return new ClientRequest(client.getId(),client.getName(), client.getEmail());
     }
 }
