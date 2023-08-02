@@ -10,6 +10,7 @@ import com.javainterns.bookingroom.model.dto.BookingRequest;
 import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
 import com.javainterns.bookingroom.repository.BookingRepository;
 import com.javainterns.bookingroom.utils.Messages;
+import com.javainterns.bookingroom.utils.TimeValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,8 @@ public class BookingServiceImpl implements BookingService {
     ClientService clientService;
     @Autowired
     RoomService roomService;
-
+    @Autowired
+    TimeValidation timeValidation;
     @Autowired
     private Messages messages;
 
@@ -34,10 +36,11 @@ public class BookingServiceImpl implements BookingService {
     public BookingRequest create(BookingRequest bookingRequest) {
         Client client = clientService.findClient(bookingRequest.getUserId());
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
+        timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime());
         Room room = roomService.findRoom(bookingRequest.getRoomId());
         List<Booking> bookingList = bookingRepository.findBookingsByRoomIdAndDate(booking.getDate(),room.getId());
-        if (!bookingHourValidation(booking,bookingList)) throw new RoomAlreadyBooked(room.getId().toString());
-        if (!bookingRoomHourValidation(booking, room)) throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
+        if (!timeValidation.bookingHourValidation(booking,bookingList)) throw new RoomAlreadyBooked(room.getId().toString());
+        if (!timeValidation.bookingRoomHourValidation(booking, room)) throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
         booking.setUser(client);
         booking.setRoom(room);
         return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
@@ -63,14 +66,4 @@ public class BookingServiceImpl implements BookingService {
                 x -> bookingRequestMapper.toBookingRequest(x)).collect(Collectors.toList());
     }
 
-    private Boolean bookingHourValidation(Booking booking, List<Booking> booked){
-        return booked.stream().allMatch(x ->
-                (booking.getStartTime()<x.getStartTime() && booking.getEndTime()<=x.getStartTime())
-                        ||
-                        (booking.getStartTime()>=x.getEndTime() && booking.getEndTime()>x.getEndTime()));
-    }
-
-    private Boolean bookingRoomHourValidation(Booking booking, Room room){
-        return ((booking.getStartTime()>=room.getStartTime()) && (booking.getEndTime()<=room.getFinishTime()));
-    }
 }

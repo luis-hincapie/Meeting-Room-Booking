@@ -22,7 +22,7 @@ public class BookingRequest {
     @Range(min = 0, message = "Room Id must be greater than 0")
     private Long roomId;
     @NotNull(message="Date must not be null")
-    @FutureOrPresent(message = "Date must be today or future")
+    @FutureOrPresent(message = "Date must be today or a future date")
     private LocalDate date;
     @NotNull(message="Start Time must not be null")
     @Range(min = 0,max = 23, message = "Start time must be between 0 and 23")
@@ -81,16 +81,6 @@ public class BookingRequest {
 
     public void setEndTime(Integer endTime) {
         this.endTime = endTime;
-    }
-
-    @JsonIgnore
-    @AssertTrue()
-    public boolean isValidTimeRange(){
-        if(endTime<=startTime || (endTime==0 && startTime !=0))
-            throw new StartTimeIsGreaterThanEndTime("startTime could not be greater than finishTime");
-        //if(date.isBefore(LocalDate.now()))
-            //throw new InvalidDataException("Date must be today or future");
-        return true;
     }
 
 }
