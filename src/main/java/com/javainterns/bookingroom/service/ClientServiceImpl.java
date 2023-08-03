@@ -56,4 +56,10 @@ public class ClientServiceImpl implements ClientService {
         Client savedClient = clientRepository.save(clientRequestMapper.toClient(clientRequest));
         return clientRequestMapper.toClientRequest(savedClient);
     }
+
+    @Override
+    public Client finClient(Long id) {
+        return clientRepository.findById(id).orElseThrow(() -> new NoRecordFoundException(messages.get(CLIENT_NOT_FOUND)));
+
+    }
 }

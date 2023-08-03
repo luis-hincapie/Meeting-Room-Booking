@@ -12,5 +12,6 @@ public interface RoomService {
     List<RoomRequest> findAll();
     RoomRequest update(RoomRequest roomRequest);
     void delete(Long id);
+    Room findRoom(Long id);
 
 }

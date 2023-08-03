@@ -11,4 +11,5 @@ public interface ClientService {
     List<ClientRequest> findAll();
     void delete(Long id);
     ClientRequest update(ClientRequest clientRequest);
+    Client finClient(Long id);
 }
