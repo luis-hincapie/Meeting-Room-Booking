@@ -40,10 +40,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingRequest create(BookingRequest bookingRequest) {
-        Client client = clientRequestMapper.toClient(clientService.findById(bookingRequest.getUserId()));
+        Client client = clientService.finClient(bookingRequest.getUserId());
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
         timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime());
-        Room room = roomRequestMapper.toRoom(roomService.findById(bookingRequest.getRoomId()));
+        Room room = roomService.findRoom(bookingRequest.getRoomId());
         List<Booking> bookingList = bookingRepository.findBookingsByRoomIdAndDate(booking.getDate(),room.getId());
         if (!timeValidation.bookingHourValidation(booking,bookingList)) throw new RoomAlreadyBooked(room.getId().toString());
         if (!timeValidation.bookingRoomHourValidation(booking, room)) throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");

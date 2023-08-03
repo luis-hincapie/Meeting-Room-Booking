@@ -69,5 +69,12 @@ public class RoomServiceImpl implements RoomService {
         roomRepository.deleteById(id);
     }
 
+    @Override
+    public Room findRoom(Long id) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new NoRecordFoundException(messages.get(ROOM_NOT_FOUND)));
+        if(!room.isActive()) throw  new NoRecordFoundException(messages.get(ROOM_NOT_FOUND));
+        return room;
+    }
+
 
 }
