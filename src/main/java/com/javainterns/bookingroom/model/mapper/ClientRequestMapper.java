@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class ClientRequestMapper {
 
     public Client toClient(ClientRequest clientRequest) {
-        return new Client(clientRequest.getName(), clientRequest.getEmail());
+        return new Client(clientRequest.getId(),clientRequest.getName(), clientRequest.getEmail());
     }
 
     public ClientRequest toClientRequest(Client client) {
-        return new ClientRequest(client.getName(), client.getEmail());
+        return new ClientRequest(client.getId(),client.getName(), client.getEmail());
     }
 }

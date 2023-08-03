@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class RoomRequestMapper {
     public Room toRoom(RoomRequest roomRequest) {
         return new Room(
+
                 roomRequest.getName(),
                 roomRequest.getLocation(),
                 roomRequest.getCapacity(),
@@ -19,6 +20,7 @@ public class RoomRequestMapper {
 
     public RoomRequest toRoomRequest(Room room) {
         return new RoomRequest(
+                room.getId(),
                 room.getName(),
                 room.getLocation(),
                 room.getCapacity(),

@@ -3,6 +3,7 @@ server:
   servlet:
     context-path: /
   port: 8080
+#  address: 192.168.2.233
 
 # Spring properties
 spring:

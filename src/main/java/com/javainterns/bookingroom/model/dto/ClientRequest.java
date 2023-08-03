@@ -23,6 +23,12 @@ public class ClientRequest {
     @Schema(example = "example@email.com")
     private String email;
 
+    public ClientRequest(Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
