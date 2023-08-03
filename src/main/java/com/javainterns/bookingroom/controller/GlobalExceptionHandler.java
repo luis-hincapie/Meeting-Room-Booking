@@ -49,12 +49,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HoursOfOperationNotAvailableException.class)
     @ResponseBody
-    public ResponseEntity<Map<String, String>> handleHoursOfOperationNotAvailableException(HoursOfOperationNotAvailableException exception) {
-        Map<String, String> response = new LinkedHashMap<>();
-        response.put("timestamp", new Date().toString());
-        response.put("status", HttpStatus.CONFLICT.toString());
-        response.put("message", exception.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    public ProblemDetail handleHoursOfOperationNotAvailableException(HoursOfOperationNotAvailableException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
+        problemDetail.setProperty("timestamp", new Date());
+        problemDetail.setTitle("Room isn't open");
+        problemDetail.setType(URI.create(""));
+        return problemDetail;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -62,7 +62,8 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
         problemDetail.setProperty("timestamp", new Date().toString());
         problemDetail.setTitle("Argument not Valid");
-        problemDetail.setProperty("errors", new java.util.ArrayList<>(exception.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
+        problemDetail.setProperty("errors", exception.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList());
+        problemDetail.setType(URI.create(""));
         return problemDetail;
     }
 }
