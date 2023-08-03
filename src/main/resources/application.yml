@@ -2,8 +2,8 @@
 server:
   servlet:
     context-path: /
-  port: 8080
-#  address: 192.168.2.233
+  port: 8081
+#  address: 192.168.2.57
 
 # Spring properties
 spring:
@@ -14,3 +14,6 @@ spring:
     name: grades-api
   messages:
     basename: messages/Messages
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

@@ -1,6 +1,6 @@
 package com.javainterns.bookingroom.controller;
 
-import com.javainterns.bookingroom.model.dto.ClientRequest;
+import com.javainterns.bookingroom.model.dto.*;
 import com.javainterns.bookingroom.service.ClientService;
 import com.javainterns.bookingroom.service.ClientServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,9 +13,16 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/clients")
@@ -77,5 +84,21 @@ public class ClientController {
         clientService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/signin")
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(clientService.authenticate(loginRequest));
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        return ResponseEntity.ok(clientService.registerUser(signUpRequest));
+    }
+
+    @PutMapping("/changepassword")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+    return ResponseEntity.ok(clientService.changePassword(changePasswordRequest));
+    }
+    
 
 }
