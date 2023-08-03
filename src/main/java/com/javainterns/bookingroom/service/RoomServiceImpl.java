@@ -59,7 +59,8 @@ public class RoomServiceImpl implements RoomService {
     public RoomRequest update(RoomRequest roomRequest) {
         if(!(timevalidation.isValidTimeRange(roomRequest.getFinishTime(),roomRequest.getStartTime())))
             throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
-        Room room = roomRequestMapper.toRoom(findById(roomRequest.getId()));
+        roomRepository.findById(roomRequest.getId()).orElseThrow(() -> new NoRecordFoundException(messages.get(ROOM_NOT_FOUND)));
+        Room room = roomRequestMapper.toRoom(roomRequest);
         return roomRequestMapper.toRoomRequest(roomRepository.save(room));
     }
 
