@@ -68,7 +68,7 @@ public class RoomController {
 
     @Operation(summary = "Delete a room by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User deleted"),
+            @ApiResponse(responseCode = "204", description = "User deleted"),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = Void.class))),
     })
     @DeleteMapping("/{id}")
