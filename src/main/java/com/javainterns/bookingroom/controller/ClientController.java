@@ -69,7 +69,7 @@ public class ClientController {
 
     @Operation(summary = "Delete a client by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Client deleted"),
+            @ApiResponse(responseCode = "204", description = "Client deleted"),
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content(schema = @Schema(implementation = Void.class))),
     })
     @DeleteMapping("/{id}")

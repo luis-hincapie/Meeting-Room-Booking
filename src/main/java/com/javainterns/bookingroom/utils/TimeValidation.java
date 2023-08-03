@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class TimeValidation {
     public Boolean isValidTimeRange(Integer endTime, Integer startTime){
-        return endTime<=startTime || (endTime==0 && startTime !=0);
+        return endTime>startTime || (endTime==0 && startTime !=0);
     }
 
     public Boolean bookingHourValidation(Booking booking, List<Booking> booked){
