@@ -15,9 +15,11 @@ public class TimeValidation {
 
     public Boolean bookingHourValidation(Booking booking, List<Booking> booked){
         return booked.stream().allMatch(x ->
-                (booking.getStartTime()<x.getStartTime() && booking.getEndTime()<=x.getStartTime())
+                (booking.getEndTime()<=x.getStartTime())
                         ||
-                        (booking.getStartTime()>=x.getEndTime() && booking.getEndTime()>x.getEndTime()));
+                        (booking.getStartTime()>=x.getEndTime())
+                        ||
+                        (booking.getStartTime()>=x.getEndTime() && booking.getEndTime() ==0));
     }
 
     public Boolean bookingRoomHourValidation(Booking booking, Room room){
