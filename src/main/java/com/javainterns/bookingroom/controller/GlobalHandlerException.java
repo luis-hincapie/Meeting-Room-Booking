@@ -21,23 +21,14 @@ import java.util.Map;
 public class GlobalHandlerException {
     @ExceptionHandler(NoRecordFoundException.class)
     @ResponseBody
-    public ResponseEntity<Map<String, String>> handleNoRecordFoundException(NoRecordFoundException exception) {
-        Map<String, String> response = new LinkedHashMap<>();
-        response.put("timestamp", new Date().toString());
-        response.put("status", HttpStatus.NOT_FOUND.toString());
-        response.put("message", exception.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ProblemDetail handleNoRecordFoundException(NoRecordFoundException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+        problemDetail.setProperty("timestamp", new Date());
+        problemDetail.setTitle("Record not found");
+        problemDetail.setType(URI.create(""));
+        return problemDetail;
     }
 
-    /*    @ExceptionHandler(StartTimeIsGreaterThanEndTime.class)
-        @ResponseBody
-        public ResponseEntity<Map<String,String>> stratTiemIsGreaterThanEndTime(StartTimeIsGreaterThanEndTime exception){
-            Map<String, String> response = new LinkedHashMap<>();
-            response.put("timestamp", new Date().toString());
-            response.put("status", HttpStatus.BAD_REQUEST.toString());
-            response.put("message", exception.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }*/
     @ExceptionHandler(StartTimeIsGreaterThanEndTime.class)
     @ResponseBody
     public ProblemDetail startTimeIsGreaterThanEndTime(StartTimeIsGreaterThanEndTime exception) {
@@ -50,12 +41,12 @@ public class GlobalHandlerException {
 
     @ExceptionHandler(RoomAlreadyBooked.class)
     @ResponseBody
-    public ResponseEntity<Map<String, String>> handleRoomAlreadyBooked(RoomAlreadyBooked exception) {
-        Map<String, String> response = new LinkedHashMap<>();
-        response.put("timestamp", new Date().toString());
-        response.put("status", HttpStatus.CONFLICT.toString());
-        response.put("message", exception.getMessage() + " Room already booked at this time");
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    public ProblemDetail handleRoomAlreadyBooked(RoomAlreadyBooked exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
+        problemDetail.setProperty("timestamp", new Date());
+        problemDetail.setTitle("Room already booked at this time");
+        problemDetail.setType(URI.create(""));
+        return problemDetail;
     }
 
     @ExceptionHandler(HoursOfOperationNotAvailableException.class)
