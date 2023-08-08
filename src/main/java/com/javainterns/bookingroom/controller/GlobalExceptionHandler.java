@@ -1,10 +1,12 @@
 package com.javainterns.bookingroom.controller;
 
-import com.javainterns.bookingroom.exceptions.*;
+import com.javainterns.bookingroom.exceptions.HoursOfOperationNotAvailableException;
+import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
+import com.javainterns.bookingroom.exceptions.RoomAlreadyBooked;
+import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.net.URI;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -62,7 +62,8 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Data validation error");
         problemDetail.setProperty("timestamp", new Date().toString());
         problemDetail.setTitle("Argument not Valid");
-        problemDetail.setProperty("errors", exception.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList());
+        problemDetail.setProperty("errors", exception.getBindingResult().getFieldErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage).toList());
         problemDetail.setType(URI.create(""));
         return problemDetail;
     }
