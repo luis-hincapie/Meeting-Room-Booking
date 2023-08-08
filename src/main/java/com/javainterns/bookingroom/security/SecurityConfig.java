@@ -61,8 +61,9 @@ public class SecurityConfig {
             "/v3/api-docs/**"
           )
           .permitAll();
-        auth.requestMatchers("/rooms/", "/rooms/**").hasAnyRole("ADMIN");
-        auth.requestMatchers("/login/", "/logout/").permitAll();
+        auth
+          .requestMatchers(HttpMethod.POST, "/rooms/", "/rooms/**")
+          .hasAnyRole("ADMIN");
         auth
           .requestMatchers(HttpMethod.GET, "/rooms/**", "/rooms/")
           .hasAnyRole("USER");
@@ -80,9 +81,6 @@ public class SecurityConfig {
         authorizationFilter,
         UsernamePasswordAuthenticationFilter.class
       )
-      .csrf(csrf -> {
-        csrf.ignoringRequestMatchers("/h2-console/**");
-      })
       .build();
   }
 
