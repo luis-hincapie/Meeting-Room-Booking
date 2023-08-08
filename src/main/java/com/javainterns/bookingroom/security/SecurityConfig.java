@@ -62,6 +62,7 @@ public class SecurityConfig {
           )
           .permitAll();
         auth.requestMatchers("/rooms/", "/rooms/**").hasAnyRole("ADMIN");
+        auth.requestMatchers("/login/", "/logout/").permitAll();
         auth
           .requestMatchers(HttpMethod.GET, "/rooms/**", "/rooms/")
           .hasAnyRole("USER");
