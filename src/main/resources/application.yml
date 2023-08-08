@@ -5,6 +5,12 @@ server:
   port: 8081
 #  address: 192.168.2.57
 
+jwt:
+  secret:
+    key: 76397924423F4528482B4D6251655468576D5A7134743777217A25432A46294A
+  time:
+    expiration: 86400000
+
 # Spring properties
 spring:
   # h2 is active by default. This value can be overwritten by java arg param
