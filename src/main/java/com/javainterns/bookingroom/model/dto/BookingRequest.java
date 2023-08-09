@@ -29,6 +29,7 @@ public class BookingRequest {
 
   @NotNull(message = "Date must not be null")
   @FutureOrPresent(message = "Date must be today or a future date")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private LocalDate date;
 
   @NotNull(message = "Start Time must not be null")

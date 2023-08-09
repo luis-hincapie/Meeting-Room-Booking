@@ -5,6 +5,7 @@ import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
 import com.javainterns.bookingroom.exceptions.RoomAlreadyBooked;
 import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import java.net.URI;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -94,6 +95,21 @@ public class GlobalExceptionHandler {
         .map(DefaultMessageSourceResolvable::getDefaultMessage)
         .toList()
     );
+    problemDetail.setType(URI.create(""));
+    return problemDetail;
+  }
+
+  @ExceptionHandler(DateTimeParseException.class)
+  @ResponseBody
+  public ProblemDetail handleDateTimeParseException(
+          DateTimeParseException exception
+  ) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.BAD_REQUEST,
+            exception.getMessage()
+    );
+    problemDetail.setProperty("timestamp", new Date());
+    problemDetail.setTitle("Bad date or time format");
     problemDetail.setType(URI.create(""));
     return problemDetail;
   }
