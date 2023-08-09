@@ -50,10 +50,4 @@ public class UserController {
         User user = userMapper.toUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
     }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<User> findUsers() {
-        return userService.findAll();
-    }
 }
