@@ -31,9 +31,6 @@ public class BookingController {
   @Autowired
   BookingService bookingService;
 
-  @Autowired
-  UserService userService;
-
   @Operation(summary = "Get all bookings")
   @ApiResponses(
     value = {

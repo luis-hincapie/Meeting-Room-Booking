@@ -26,79 +26,43 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Autowired
-  JwtUtils jwtUtils;
+    @Autowired
+    JwtUtils jwtUtils;
 
-  @Autowired
-  UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
-  @Autowired
-  JwtAuthorizationFilter authorizationFilter;
+    @Autowired
+    JwtAuthorizationFilter authorizationFilter;
 
-  @Bean
-  SecurityFilterChain securityFilterChain(
-    HttpSecurity httpSecurity,
-    AuthenticationManager authenticationManager
-  ) throws Exception {
-    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(
-      jwtUtils
-    );
-    jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
-    jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
+        jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
+        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
-    return httpSecurity
-      .csrf(AbstractHttpConfigurer::disable)
-      .authorizeHttpRequests(auth -> {
-        auth.requestMatchers("/", "/h2-console/", "/h2-console/**").permitAll();
-        auth
-          .requestMatchers(
-            "/",
-            "/error",
-            "/csrf",
-            "/swagger-ui.html",
-            "/swagger-ui/**",
-            "/v3/api-docs",
-            "/v3/api-docs/**"
-          )
-          .permitAll();
-        auth
-          .requestMatchers(HttpMethod.POST, "/rooms/", "/rooms/**")
-          .hasAnyRole("ADMIN");
-        auth
-          .requestMatchers(HttpMethod.GET, "/rooms/**", "/rooms/")
-          .hasAnyRole("USER");
-        auth.requestMatchers("/users/", "/users/**").hasAnyRole("ADMIN");
-        auth
-          .requestMatchers("/bookings/", "/bookings/**")
-          .hasAnyRole("ADMIN", "USER");
-        auth.anyRequest().authenticated();
-      })
-      .sessionManagement(session -> {
-        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-      })
-      .addFilter(jwtAuthenticationFilter)
-      .addFilterBefore(
-        authorizationFilter,
-        UsernamePasswordAuthenticationFilter.class
-      )
-      .build();
-  }
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> {
+            auth.requestMatchers( "/h2-console/", "/h2-console/**").permitAll();
+            auth.requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/users/", "/users/**").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/rooms/", "/rooms/**").hasAnyRole("ADMIN");
+            auth.requestMatchers(HttpMethod.GET, "/rooms/**", "/rooms/").hasAnyRole("USER");
+            auth.requestMatchers("/users/", "/users/**").hasAnyRole("USER");
+            auth.requestMatchers("/bookings/", "/bookings/**").hasAnyRole("ADMIN", "USER");
 
-  @Bean
-  PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+            auth.anyRequest().authenticated();
+        }).sessionManagement(session -> {
+            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        }).addFilter(jwtAuthenticationFilter).addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class).build();
+    }
 
-  @Bean
-  AuthenticationManager authenticationManager(
-    HttpSecurity httpSecurity,
-    PasswordEncoder passwordEncoder
-  ) throws Exception {
-    return httpSecurity
-      .getSharedObject(AuthenticationManagerBuilder.class)
-      .userDetailsService(userDetailsService)
-      .passwordEncoder(passwordEncoder)
-      .and()
-      .build();
-  }
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(HttpSecurity httpSecurity, PasswordEncoder passwordEncoder) throws Exception {
+        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService).passwordEncoder(passwordEncoder).and().build();
+    }
 }

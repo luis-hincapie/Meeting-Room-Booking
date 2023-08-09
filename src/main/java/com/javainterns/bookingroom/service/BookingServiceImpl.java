@@ -97,4 +97,9 @@ public class BookingServiceImpl implements BookingService {
       .map(x -> bookingRequestMapper.toBookingRequest(x))
       .collect(Collectors.toList());
   }
+  @Override
+  public List<Booking> findBookingsByUsername(String username) {
+    return bookingRepository.findByUser_Username(username);
+  }
+
 }

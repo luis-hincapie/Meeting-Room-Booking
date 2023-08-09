@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateUserDTO {
 
-  @Email
+  @Email(message = "email")
   @NotBlank
   private String email;
 
