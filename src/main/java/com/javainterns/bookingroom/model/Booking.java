@@ -12,6 +12,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,10 +47,10 @@ public class Booking {
   private User user;
 
   @Column(nullable = false)
-  private Integer startTime;
+  private LocalTime startTime;
 
   @Column(nullable = false)
-  private Integer endTime;
+  private LocalTime endTime;
 
   @Temporal(TemporalType.DATE)
   @Column(nullable = false)

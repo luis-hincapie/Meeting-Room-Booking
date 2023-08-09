@@ -22,7 +22,6 @@ public class BookingRequestMapper {
     bookingRequest.setEndTime(booking.getEndTime());
     bookingRequest.setStartTime(booking.getStartTime());
     bookingRequest.setRoomId(booking.getRoom().getId());
-    bookingRequest.setUserId(booking.getUser().getId());
     return bookingRequest;
   }
 }

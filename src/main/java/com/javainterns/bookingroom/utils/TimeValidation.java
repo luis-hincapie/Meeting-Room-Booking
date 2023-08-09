@@ -5,12 +5,13 @@ import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.Room;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Component
 public class TimeValidation {
-    public Boolean isValidTimeRange(Integer endTime, Integer startTime){
-        return endTime>startTime || (endTime==0 && startTime !=0);
+    public Boolean isValidTimeRange(LocalTime endTime, LocalTime startTime){
+        return endTime.isAfter(startTime);
     }
 
     public Boolean bookingHourValidation(Booking booking, List<Booking> booked){
