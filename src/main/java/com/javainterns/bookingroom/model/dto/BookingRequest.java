@@ -1,7 +1,9 @@
 package com.javainterns.bookingroom.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,8 +32,12 @@ public class BookingRequest {
   private LocalDate date;
 
   @NotNull(message = "Start Time must not be null")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+  @Schema(example = "08:00")
   private LocalTime startTime;
 
   @NotNull(message = "End Time must not be null")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+  @Schema(example = "08:00")
   private LocalTime endTime;
 }

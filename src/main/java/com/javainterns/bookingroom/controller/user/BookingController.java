@@ -50,8 +50,8 @@ public class BookingController {
     }
   )
   @GetMapping("/{id}")
-  public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id) {
-    return new ResponseEntity<>(bookingService.findById(id), HttpStatus.OK);
+  public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id, Principal principal) {
+    return new ResponseEntity<>(bookingService.findById(id, principal), HttpStatus.OK);
   }
 
   @Operation(summary = "Delete an booking by ID")
@@ -66,8 +66,8 @@ public class BookingController {
     }
   )
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
-    bookingService.delete(id);
+  public ResponseEntity<String> deleteBooking(@PathVariable Long id, Principal principal) {
+    bookingService.deleteByUser(id, principal);
     return new ResponseEntity<String>("Booking deleted", HttpStatus.OK);
   }
 
@@ -94,8 +94,7 @@ public class BookingController {
   )
   @PostMapping("/")
   public ResponseEntity<BookingRequest> createBooking(
-    @Valid @RequestBody BookingRequest bookingRequest, Principal principal
-  ) {
+    @Valid @RequestBody BookingRequest bookingRequest, Principal principal) {
     return ResponseEntity.ok(bookingService.create(bookingRequest, principal));
   }
 }

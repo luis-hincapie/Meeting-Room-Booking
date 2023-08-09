@@ -48,17 +48,17 @@ public class BookingServiceImpl implements BookingService {
     public BookingRequest create(BookingRequest bookingRequest, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
-        if(timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime()))
+        if(!timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime()))
             throw new StartTimeIsGreaterThanEndTime("Start time greater than time");
         Room room = roomService.findRoom(bookingRequest.getRoomId());
         List<Booking> bookingList = bookingRepository.findBookingsByRoomIdAndDate(
                 booking.getDate(),
                 room.getId()
         );
-        if (!timeValidation.bookingHourValidation(booking, bookingList))
-            throw new RoomAlreadyBooked(room.getId().toString());
         if (!timeValidation.bookingRoomHourValidation(booking, room))
             throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
+        if (!timeValidation.bookingHourValidation(booking, bookingList))
+            throw new RoomAlreadyBooked(room.getId().toString());
         booking.setUser(user);
         booking.setRoom(room);
         return bookingRequestMapper.toBookingRequest(
@@ -76,10 +76,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingRequest findById(Long id) {
+    public Boolean deleteByUser(Long id, Principal principal) {
+;
+    bookingRepository.deleteById(
+            bookingRepository.findByIdAndUser_Username(id, principal.getName())
+                    .orElseThrow(()->new NoRecordFoundException(messages.get("booking.record.not.found")))
+                    .getId());
+        return true;
+    }
+
+    @Override
+    public BookingRequest findById(Long id, Principal principal) {
         return bookingRequestMapper.toBookingRequest(
                 bookingRepository
-                        .findById(id)
+                        .findByIdAndUser_Username(id, principal.getName())
                         .orElseThrow(() ->
                                 new NoRecordFoundException("Booking Record not found")
                         )
