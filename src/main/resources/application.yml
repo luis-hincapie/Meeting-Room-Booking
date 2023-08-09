@@ -20,6 +20,5 @@ spring:
     name: grades-api
   messages:
     basename: messages/Messages
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+springdoc:
+  show-login-endpoint: true
