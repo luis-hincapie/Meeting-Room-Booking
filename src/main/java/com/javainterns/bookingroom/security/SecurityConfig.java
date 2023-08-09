@@ -44,12 +44,6 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> {
             auth.requestMatchers( "/h2-console/", "/h2-console/**").permitAll();
             auth.requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll();
-            auth.requestMatchers(HttpMethod.POST, "/users/", "/users/**").permitAll();
-            auth.requestMatchers(HttpMethod.POST, "/rooms/", "/rooms/**").hasAnyRole("ADMIN");
-            auth.requestMatchers(HttpMethod.GET, "/rooms/**", "/rooms/").hasAnyRole("USER");
-            auth.requestMatchers("/users/", "/users/**").hasAnyRole("USER");
-            auth.requestMatchers("/bookings/", "/bookings/**").hasAnyRole("ADMIN", "USER");
-
             auth.anyRequest().authenticated();
         }).sessionManagement(session -> {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

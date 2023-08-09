@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,6 +72,7 @@ public class RoomController {
     }
   )
   @PostMapping("/")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<RoomRequest> create(
     @Valid @RequestBody RoomRequest roomRequest
   ) {
@@ -94,6 +96,7 @@ public class RoomController {
     }
   )
   @PutMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<RoomRequest> update(
     @Valid @RequestBody RoomRequest roomRequest,
     @PathVariable @NotNull Long id
@@ -114,6 +117,7 @@ public class RoomController {
     }
   )
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
     roomService.delete(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
