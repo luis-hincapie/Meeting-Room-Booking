@@ -1,4 +1,4 @@
-package com.javainterns.bookingroom.controller;
+package com.javainterns.bookingroom.controller.user;
 
 import com.javainterns.bookingroom.model.User;
 import com.javainterns.bookingroom.model.dto.CreateUserDTO;
