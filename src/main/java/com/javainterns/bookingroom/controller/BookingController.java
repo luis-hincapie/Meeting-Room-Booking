@@ -1,6 +1,7 @@
 package com.javainterns.bookingroom.controller;
 
 import com.javainterns.bookingroom.model.dto.BookingRequest;
+import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
 import com.javainterns.bookingroom.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,10 +9,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/bookings")
@@ -19,6 +24,19 @@ public class BookingController {
 
   @Autowired
   BookingService bookingService;
+
+  @Autowired
+  BookingRequestMapper bookingRequestMapper;
+
+  @GetMapping
+  public ResponseEntity<List<BookingRequest>> bookingList(@NotNull Principal principal) {
+    return ResponseEntity.ok(bookingService
+            .findBookingsByUsername(principal.getName())
+            .stream()
+            .map(booking -> bookingRequestMapper.toBookingRequest(booking))
+            .toList()
+    );
+  }
 
   @Operation(summary = "Get a booking by ID")
   @ApiResponses(
