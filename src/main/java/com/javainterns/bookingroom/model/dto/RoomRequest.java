@@ -1,10 +1,13 @@
 package com.javainterns.bookingroom.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,13 +36,15 @@ public class RoomRequest {
   @Schema(example = "3")
   private Integer capacity;
 
-  @Range(min = 0, max = 23, message = "Start time must be between 0 and 23")
-  @Schema(example = "5")
-  private Integer startTime;
+  @Column(nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+  @Schema(example = "08:00")
+  private LocalTime startTime;
 
-  @Range(min = 0, max = 23, message = "End time must be between 0 and 23")
-  @Schema(example = "20")
-  private Integer finishTime;
+  @Column(nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+  @Schema(example = "18:00")
+  private LocalTime finishTime;
 
   private Boolean isActive;
 }

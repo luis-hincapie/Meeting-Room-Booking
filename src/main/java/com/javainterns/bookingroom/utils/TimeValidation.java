@@ -1,11 +1,14 @@
 package com.javainterns.bookingroom.utils;
 
-import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
+import java.time.LocalTime;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.Room;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalTime;
 import java.util.List;
 
 @Component
@@ -24,6 +27,6 @@ public class TimeValidation {
     }
 
     public Boolean bookingRoomHourValidation(Booking booking, Room room){
-        return ((booking.getStartTime()>=room.getStartTime()) && (booking.getEndTime()<=room.getFinishTime()));
+        return (booking.getStartTime()>=room.getStartTime() && booking.getEndTime()<=room.getFinishTime());
     }
 }
