@@ -14,3 +14,9 @@ spring:
     name: grades-api
   messages:
     basename: messages/Messages
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /
