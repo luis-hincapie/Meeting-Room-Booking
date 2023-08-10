@@ -26,13 +26,8 @@ public class AdminRoomController {
             value = {
                     @ApiResponse(responseCode = "201", description = "Room created"),
                     @ApiResponse(
-                            responseCode = "404",
-                            description = "Room not found",
-                            content = @Content(schema = @Schema(implementation = Void.class))
-                    ),
-                    @ApiResponse(
                             responseCode = "400",
-                            description = "Start time must not be greater than end time",
+                            description = "Start time must not be greater than end time\t\nBad date or time format",
                             content = @Content(schema = @Schema(implementation = Void.class))
                     ),
             }
@@ -54,7 +49,7 @@ public class AdminRoomController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Start time must not be greater than end time",
+                            description = "Start time must not be greater than end time\t\nBad date or time format",
                             content = @Content(schema = @Schema(implementation = Void.class))
                     ),
             }
@@ -70,10 +65,10 @@ public class AdminRoomController {
     @Operation(summary = "Delete a room by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "204", description = "User deleted"),
+                    @ApiResponse(responseCode = "204", description = "Room deleted"),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "User not found",
+                            description = "Room not found",
                             content = @Content(schema = @Schema(implementation = Void.class))
                     ),
             }

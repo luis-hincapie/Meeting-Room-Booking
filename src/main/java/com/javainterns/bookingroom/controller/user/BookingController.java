@@ -22,79 +22,80 @@ import java.util.List;
 @RequestMapping(path = "/bookings")
 public class BookingController {
 
-  @Autowired
-  BookingService bookingService;
+    @Autowired
+    BookingService bookingService;
 
-  @Autowired
-  BookingRequestMapper bookingRequestMapper;
+    @Autowired
+    BookingRequestMapper bookingRequestMapper;
 
-  @GetMapping
-  public ResponseEntity<List<BookingRequest>> bookingList(@NotNull Principal principal) {
-    return ResponseEntity.ok(bookingService
-            .findBookingsByUsername(principal.getName())
-            .stream()
-            .map(booking -> bookingRequestMapper.toBookingRequest(booking))
-            .toList()
-    );
-  }
-
-  @Operation(summary = "Get a booking by ID")
-  @ApiResponses(
-    value = {
-      @ApiResponse(responseCode = "200", description = "Booking found"),
-      @ApiResponse(
-        responseCode = "404",
-        description = "Booking not found",
-        content = @Content(schema = @Schema(implementation = Void.class))
-      ),
+    @Operation(summary = "Get bookings by user")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Booking list"),
+            }
+    )
+    @GetMapping
+    public ResponseEntity<List<BookingRequest>> bookingList(@NotNull Principal principal) {
+        return ResponseEntity.ok(bookingService.findBookingsByUsername(principal.getName()));
     }
-  )
-  @GetMapping("/{id}")
-  public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id, Principal principal) {
-    return new ResponseEntity<>(bookingService.findById(id, principal), HttpStatus.OK);
-  }
 
-  @Operation(summary = "Delete an booking by ID")
-  @ApiResponses(
-    value = {
-      @ApiResponse(responseCode = "200", description = "Booking deleted"),
-      @ApiResponse(
-        responseCode = "404",
-        description = "Booking not found",
-        content = @Content(schema = @Schema(implementation = Void.class))
-      ),
+    @Operation(summary = "Get a booking by ID")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Booking found"),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Booking not found",
+                            content = @Content(schema = @Schema(implementation = Void.class))
+                    ),
+            }
+    )
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id, Principal principal) {
+        return new ResponseEntity<>(bookingService.findById(id, principal), HttpStatus.OK);
     }
-  )
-  @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteBooking(@PathVariable Long id, Principal principal) {
-    bookingService.deleteByUser(id, principal);
-    return new ResponseEntity<String>("Booking deleted", HttpStatus.OK);
-  }
 
-  @Operation(summary = "Create an user")
-  @ApiResponses(
-    value = {
-      @ApiResponse(responseCode = "200", description = "Booking created"),
-      @ApiResponse(
-        responseCode = "404",
-        description = "User not found\t\nRoom not found",
-        content = @Content(schema = @Schema(implementation = Void.class))
-      ),
-      @ApiResponse(
-        responseCode = "400",
-        description = "Start time must not be greater than end time",
-        content = @Content(schema = @Schema(implementation = Void.class))
-      ),
-      @ApiResponse(
-        responseCode = "409",
-        description = "Room booked\t\nRoom won't be open at this time",
-        content = @Content(schema = @Schema(implementation = Void.class))
-      ),
+    @Operation(summary = "Delete an booking by ID")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Booking deleted"),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Booking not found",
+                            content = @Content(schema = @Schema(implementation = Void.class))
+                    ),
+            }
+    )
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBooking(@PathVariable Long id, Principal principal) {
+        bookingService.deleteByUser(id, principal);
+        return new ResponseEntity<String>("Booking deleted", HttpStatus.OK);
     }
-  )
-  @PostMapping("/")
-  public ResponseEntity<BookingRequest> createBooking(
-    @Valid @RequestBody BookingRequest bookingRequest, Principal principal) {
-    return ResponseEntity.ok(bookingService.create(bookingRequest, principal));
-  }
+
+    @Operation(summary = "Create an user")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Booking created"),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Room not found",
+                            content = @Content(schema = @Schema(implementation = Void.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Start time must not be greater than end time",
+                            content = @Content(schema = @Schema(implementation = Void.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Room booked\t\nRoom won't be open at this time",
+                            content = @Content(schema = @Schema(implementation = Void.class))
+                    ),
+            }
+    )
+    @PostMapping("/")
+    public ResponseEntity<BookingRequest> createBooking(
+            @Valid @RequestBody BookingRequest bookingRequest, Principal principal) {
+        return ResponseEntity.ok(bookingService.create(bookingRequest, principal));
+    }
 }

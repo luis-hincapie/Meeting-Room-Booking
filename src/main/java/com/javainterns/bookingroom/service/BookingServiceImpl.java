@@ -91,7 +91,7 @@ public class BookingServiceImpl implements BookingService {
                 bookingRepository
                         .findByIdAndUser_Username(id, principal.getName())
                         .orElseThrow(() ->
-                                new NoRecordFoundException("Booking Record not found")
+                                new NoRecordFoundException("Booking Records not found")
                         )
         );
     }
@@ -106,8 +106,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> findBookingsByUsername(String username) {
-        return bookingRepository.findByUser_Username(username);
+    public List<BookingRequest> findBookingsByUsername(String username) {
+        return bookingRepository.findByUser_Username(username)
+                .stream()
+                .map(booking -> bookingRequestMapper.toBookingRequest(booking))
+                .toList();
     }
 
 }

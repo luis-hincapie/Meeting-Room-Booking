@@ -42,14 +42,8 @@ public class RoomServiceImpl implements RoomService {
 
   @Override
   public RoomRequest create(RoomRequest roomRequest) {
-    if (
-      !(
-        timevalidation.isValidTimeRange(
-          roomRequest.getFinishTime(),
-          roomRequest.getStartTime()
-        )
-      )
-    ) throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
+    if (!timevalidation.isValidTimeRange(roomRequest.getFinishTime(), roomRequest.getStartTime()))
+      throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
     Room room = roomRequestMapper.toRoom(roomRequest);
     return roomRequestMapper.toRoomRequest(roomRepository.save(room));
   }
@@ -79,14 +73,8 @@ public class RoomServiceImpl implements RoomService {
 
   @Override
   public RoomRequest update(RoomRequest roomRequest) {
-    if (
-      !(
-        timevalidation.isValidTimeRange(
-          roomRequest.getFinishTime(),
-          roomRequest.getStartTime()
-        )
-      )
-    ) throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
+    if (!timevalidation.isValidTimeRange(roomRequest.getFinishTime(), roomRequest.getStartTime()))
+      throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
     roomRepository
       .findById(roomRequest.getId())
       .orElseThrow(() ->

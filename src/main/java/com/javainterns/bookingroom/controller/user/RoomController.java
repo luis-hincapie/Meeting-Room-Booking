@@ -26,7 +26,7 @@ public class RoomController {
 
     @Operation(summary = "Get all rooms")
     @ApiResponses(
-            value = {@ApiResponse(responseCode = "200", description = "Users found")}
+            value = {@ApiResponse(responseCode = "200", description = "Rooms list")}
     )
     @GetMapping("/")
     public ResponseEntity<List<RoomRequest>> findAll() {
@@ -36,10 +36,10 @@ public class RoomController {
     @Operation(summary = "Get a room by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "User found"),
+                    @ApiResponse(responseCode = "200", description = "Room found"),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "User not found",
+                            description = "Room not found",
                             content = @Content(schema = @Schema(implementation = Void.class))
                     ),
             }

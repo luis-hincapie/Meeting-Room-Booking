@@ -31,9 +31,8 @@ public class SpringDocConfig {
           .version("1.0")
           .contact(
             new Contact()
-              .name("Sallo Szrajbman")
-              .email("www.baeldung.com")
-              .url("salloszraj@gmail.com")
+              .name("Backend Team")
+              .email("backend.team@blankfactor.com")
           )
           .license(new License().name("License of API").url("API license URL"))
       );
