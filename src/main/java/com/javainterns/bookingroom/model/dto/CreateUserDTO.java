@@ -1,8 +1,8 @@
 package com.javainterns.bookingroom.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,6 @@ public class CreateUserDTO {
   private String username;
 
   @NotBlank
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
-
-  private Set<String> roles;
 }

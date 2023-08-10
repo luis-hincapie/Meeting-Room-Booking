@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: /
   port: 8080
-#  address: 192.168.2.57
+# address: 192.168.2.67
 
 jwt:
   secret:
@@ -22,3 +22,10 @@ spring:
     basename: messages/Messages
 springdoc:
   show-login-endpoint: true
+  swagger-ui:
+    tags-sorter: alpha
+
+# logging:
+#   level:
+#     root: INFO
+#       org.springframework: INFO

@@ -2,8 +2,9 @@ package com.javainterns.bookingroom.service;
 
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.dto.BookingRequest;
-
+import com.javainterns.bookingroom.model.dto.TimeSlot;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingService {
@@ -14,4 +15,6 @@ public interface BookingService {
   List<BookingRequest> findBookingsByUsername(String username);
 
   Boolean deleteByUser(Long id, Principal principal);
+  List<Booking> findBookingsByRoomAndDate(Long roomId, LocalDate date);
+  List<TimeSlot> findAvailableTimeSlots(Long id, LocalDate date);
 }
