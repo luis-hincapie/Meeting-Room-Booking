@@ -1,9 +1,5 @@
 package com.javainterns.bookingroom.security;
 
-import com.javainterns.bookingroom.security.filters.JwtAuthenticationFilter;
-import com.javainterns.bookingroom.security.filters.JwtAuthorizationFilter;
-import com.javainterns.bookingroom.security.jwt.JwtUtils;
-import com.javainterns.bookingroom.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import com.javainterns.bookingroom.security.filters.JwtAuthenticationFilter;
+import com.javainterns.bookingroom.security.filters.JwtAuthorizationFilter;
+import com.javainterns.bookingroom.security.jwt.JwtUtils;
+import com.javainterns.bookingroom.service.UserDetailsServiceImpl;
 
 @Configuration
 /*@EnableGlobalMethodSecurity(prePostEnabled = true)*/
@@ -61,6 +62,8 @@ public class SecurityConfig {
             "/v3/api-docs/**"
           )
           .permitAll();
+        auth.requestMatchers("/users").permitAll();
+
         auth.anyRequest().authenticated();
       })
       .httpBasic(Customizer.withDefaults())

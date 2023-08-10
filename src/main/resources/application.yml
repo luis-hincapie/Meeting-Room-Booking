@@ -15,7 +15,7 @@ jwt:
 spring:
   # h2 is active by default. This value can be overwritten by java arg param
   profiles:
-    active: h2
+    active: dev
   application:
     name: grades-api
   messages:
@@ -24,7 +24,6 @@ springdoc:
   show-login-endpoint: true
   swagger-ui:
     tags-sorter: alpha
-
 # logging:
 #   level:
 #     root: INFO

@@ -1,9 +1,7 @@
 package com.javainterns.bookingroom;
 
-import com.javainterns.bookingroom.model.ERole;
-import com.javainterns.bookingroom.model.Role;
-import com.javainterns.bookingroom.model.User;
-import com.javainterns.bookingroom.repository.UserRepository;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Set;
+import com.javainterns.bookingroom.model.ERole;
+import com.javainterns.bookingroom.model.Role;
+import com.javainterns.bookingroom.model.User;
+import com.javainterns.bookingroom.repository.RoleRepository;
+import com.javainterns.bookingroom.repository.UserRepository;
 
 @SpringBootApplication
 public class BookingroomApplication {
@@ -26,16 +28,29 @@ public class BookingroomApplication {
   @Autowired
   UserRepository userRepository;
 
+  @Autowired
+  RoleRepository roleRepository;
+
   @Bean
   CommandLineRunner init() {
+
+
     return args -> {
+
+
+      Role roleAdmin = Role.builder().name(ERole.valueOf(ERole.ADMIN.name())).build();
+      Role roleUser = Role.builder().name(ERole.valueOf(ERole.USER.name())).build();
+
+      roleRepository.save(roleAdmin);
+      roleRepository.save(roleUser);
+
       User userEntity = User
         .builder()
         .email("santiago@mail.com")
         .username("santiago")
         .password(passwordEncoder.encode("1234"))
         .roles(
-          Set.of(Role.builder().name(ERole.valueOf(ERole.ADMIN.name())).build())
+          Set.of(roleAdmin)
         )
         .build();
 
@@ -45,23 +60,12 @@ public class BookingroomApplication {
         .username("anyi")
         .password(passwordEncoder.encode("1234"))
         .roles(
-          Set.of(Role.builder().name(ERole.valueOf(ERole.USER.name())).build())
-        )
-        .build();
-
-      User userEntity3 = User
-        .builder()
-        .email("andrea@mail.com")
-        .username("andrea")
-        .password(passwordEncoder.encode("1234"))
-        .roles(
-          Set.of(Role.builder().name(ERole.valueOf(ERole.USER.name())).build())
+          Set.of(roleUser)
         )
         .build();
 
       userRepository.save(userEntity);
       userRepository.save(userEntity2);
-      userRepository.save(userEntity3);
     };
   }
 }

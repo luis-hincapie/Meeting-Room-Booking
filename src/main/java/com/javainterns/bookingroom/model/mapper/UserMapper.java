@@ -1,11 +1,7 @@
 package com.javainterns.bookingroom.model.mapper;
 
-import java.util.Set;
-
 import org.springframework.stereotype.Component;
 
-import com.javainterns.bookingroom.model.ERole;
-import com.javainterns.bookingroom.model.Role;
 import com.javainterns.bookingroom.model.User;
 import com.javainterns.bookingroom.model.dto.CreateUserDTO;
 
@@ -17,7 +13,7 @@ public class UserMapper {
                 userRequest.getEmail(),
                 userRequest.getUsername(),
                 userRequest.getPassword(),
-                Set.of(Role.builder().name(ERole.valueOf(ERole.USER.name())).build()),
+                null,
                 null
 
         );

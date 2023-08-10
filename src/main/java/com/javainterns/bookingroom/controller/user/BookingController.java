@@ -46,7 +46,7 @@ public class BookingController {
   @GetMapping
   public ResponseEntity<List<BookingRequest>> bookingList(
     @NotNull Principal principal
-  ) {
+  ) {    
     return ResponseEntity.ok(
       bookingService
         .findBookingsByUsername(principal.getName())
