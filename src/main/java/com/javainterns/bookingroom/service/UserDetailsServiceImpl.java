@@ -1,6 +1,8 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.repository.UserRepository;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,8 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import com.javainterns.bookingroom.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         com.javainterns.bookingroom.model.User user = userRepository
                 .findByUsername(username)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("El usuario " + username + " no existe.")
+                        new UsernameNotFoundException("User with username: " + username + " does not exist")
                 );
 
         Collection<? extends GrantedAuthority> authorities = user

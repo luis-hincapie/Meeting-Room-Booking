@@ -1,26 +1,25 @@
 package com.javainterns.bookingroom.service;
 
-import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
-import com.javainterns.bookingroom.model.User;
-import com.javainterns.bookingroom.model.dto.BookingRequest;
-import com.javainterns.bookingroom.repository.UserRepository;
-import com.javainterns.bookingroom.utils.Messages;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
+import com.javainterns.bookingroom.model.User;
+import com.javainterns.bookingroom.repository.UserRepository;
+import com.javainterns.bookingroom.utils.Messages;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  @Autowired
-  UserRepository userRepository;
 
-  @Autowired
-  Messages messages;
-
-  @Autowired
-  PasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final Messages messages;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public User create(User user) {

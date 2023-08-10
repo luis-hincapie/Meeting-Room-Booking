@@ -1,5 +1,9 @@
 package com.javainterns.bookingroom.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
 import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import com.javainterns.bookingroom.model.Room;
@@ -8,11 +12,11 @@ import com.javainterns.bookingroom.model.mapper.RoomRequestMapper;
 import com.javainterns.bookingroom.repository.RoomRepository;
 import com.javainterns.bookingroom.utils.Messages;
 import com.javainterns.bookingroom.utils.TimeValidation;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
   private static final String ROOM_NOT_FOUND = "room.not.found";
@@ -20,35 +24,19 @@ public class RoomServiceImpl implements RoomService {
     "start-time.could.not.be.greater.than.finish-time";
 
   private final RoomRepository roomRepository;
-
   private final RoomRequestMapper roomRequestMapper;
-
   private final TimeValidation timevalidation;
-
   private final Messages messages;
-
-  @Autowired
-  public RoomServiceImpl(
-    RoomRepository roomRepository,
-    RoomRequestMapper roomRequestMapper,
-    TimeValidation timevalidation,
-    Messages messages
-  ) {
-    this.roomRepository = roomRepository;
-    this.roomRequestMapper = roomRequestMapper;
-    this.timevalidation = timevalidation;
-    this.messages = messages;
-  }
 
   @Override
   public RoomRequest create(RoomRequest roomRequest) {
     if (
-      !(
+      Boolean.FALSE.equals((
         timevalidation.isValidTimeRange(
           roomRequest.getFinishTime(),
           roomRequest.getStartTime()
         )
-      )
+      ))
     ) throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
     Room room = roomRequestMapper.toRoom(roomRequest);
     return roomRequestMapper.toRoomRequest(roomRepository.save(room));
@@ -61,7 +49,7 @@ public class RoomServiceImpl implements RoomService {
       .orElseThrow(() ->
         new NoRecordFoundException(messages.get(ROOM_NOT_FOUND))
       );
-    if (!room.getIsActive()) throw new NoRecordFoundException(
+    if (Boolean.FALSE.equals(room.getIsActive())) throw new NoRecordFoundException(
       messages.get(ROOM_NOT_FOUND)
     );
     return roomRequestMapper.toRoomRequest(room);
@@ -80,12 +68,12 @@ public class RoomServiceImpl implements RoomService {
   @Override
   public RoomRequest update(RoomRequest roomRequest) {
     if (
-      !(
+      Boolean.FALSE.equals((
         timevalidation.isValidTimeRange(
           roomRequest.getFinishTime(),
           roomRequest.getStartTime()
         )
-      )
+      ))
     ) throw new StartTimeIsGreaterThanEndTime(messages.get(RANGE_TIME_ERROR));
     roomRepository
       .findById(roomRequest.getId())
@@ -111,7 +99,7 @@ public class RoomServiceImpl implements RoomService {
       .orElseThrow(() ->
         new NoRecordFoundException(messages.get(ROOM_NOT_FOUND))
       );
-    if (!room.getIsActive()) throw new NoRecordFoundException(
+    if (Boolean.FALSE.equals(room.getIsActive())) throw new NoRecordFoundException(
       messages.get(ROOM_NOT_FOUND)
     );
     return room;
