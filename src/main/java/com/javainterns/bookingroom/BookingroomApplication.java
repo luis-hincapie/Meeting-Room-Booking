@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins = "*")
 public class BookingroomApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BookingroomApplication.class, args);
-
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(BookingroomApplication.class, args);
+    }
 }
