@@ -1,34 +1,29 @@
 package com.javainterns.bookingroom.service;
 
 import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
-import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.dto.RoomRequest;
-import com.javainterns.bookingroom.model.mapper.RoomRequestMapper;
-import com.javainterns.bookingroom.repository.RoomRepository;
-import com.javainterns.bookingroom.utils.TimeValidator;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
-class RoomServiceTests {
+class RoomServiceTest {
 
-    @Mock
+/*    @Mock
     private TimeValidator timeValidator;
 
     @Mock
@@ -43,7 +38,13 @@ class RoomServiceTests {
     @InjectMocks
     private RoomServiceImpl roomService;
 
+    private RoomRequest roomRequest;*/
+
+    @Autowired
+    private RoomService roomService;
+
     private RoomRequest roomRequest;
+
     @BeforeEach
     void setUp() {
 
@@ -53,25 +54,30 @@ class RoomServiceTests {
     @DisplayName("Given RoomRequest when createRoom then return RoomRequest")
     @ParameterizedTest
     @CsvSource({"00:00,01:00", "01:28,02:30", "23:00,23:59", "00:00,23:59", "11:00,23:00"})
-    void givenRoomRequest_whenCreateRoom_theReturnRoomRequest(LocalTime startTime, LocalTime finishTime) {
+    void givenRoomRequest_whenCreateRoom_thenReturnRoomRequest(
+                LocalTime startTime, LocalTime finishTime){
         roomRequest = RoomRequest.builder()
-                .id(null)
                 .name("Room 1")
+                .location("Location 1")
+                .capacity(10)
                 .startTime(startTime)
                 .finishTime(finishTime)
                 .isActive(true)
                 .build();
 
         // Given roomRequest
-        given(roomService.create(roomRequest)).willReturn(roomRequest);
+        //given(roomService.create(roomRequest)).willReturn(roomRequest);
 
         // When
         RoomRequest roomRequestCreated = roomService.create(roomRequest);
 
         // Then
-        assertNotNull(roomRequestCreated);
-        assertInstanceOf(Long.class, roomRequestCreated.getId());
+        //assertNotNull(roomRequestCreated);
+        System.out.println(roomRequestCreated);
         assertEquals(roomRequest.getName(), roomRequestCreated.getName());
+        assertThat(roomRequestCreated.getId()).isPositive();
+        assertEquals(roomRequest.getLocation(), roomRequestCreated.getLocation());
+        assertEquals(roomRequest.getCapacity(), roomRequestCreated.getCapacity());
         assertEquals(roomRequest.getStartTime(), roomRequestCreated.getStartTime());
         assertEquals(roomRequest.getFinishTime(), roomRequestCreated.getFinishTime());
         assertEquals(roomRequest.getIsActive(), roomRequestCreated.getIsActive());
@@ -84,7 +90,9 @@ class RoomServiceTests {
     @CsvSource({"01:00,00:00", "03:28,02:30", "23:59,23:00", "23:59,00:00", "23:00,11:00"})
     void givenBadRoomRequest_whenCreateRoom_thenThrowsException(LocalTime startTime, LocalTime finishTime) {
         roomRequest = RoomRequest.builder()
-                .id(null)
+                .name("Room 1")
+                .location("Location 1")
+                .capacity(10)
                 .name("Room 1")
                 .startTime(startTime)
                 .finishTime(finishTime)
@@ -97,7 +105,7 @@ class RoomServiceTests {
         assertThrows(StartTimeIsGreaterThanEndTime.class, () -> roomService.create(roomRequest));
 
         // Then
-        verify(roomRepository,never()).save(any(Room.class));
+        //verify(roomRepository,never()).save(any(Room.class));
 
     }
 
