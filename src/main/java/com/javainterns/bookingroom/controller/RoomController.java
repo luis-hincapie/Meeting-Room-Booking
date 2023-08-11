@@ -62,12 +62,13 @@ public class RoomController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<RoomRequest> update(@Valid @RequestBody RoomRequest roomRequest, @PathVariable @NotNull Long id) {
+        roomRequest.setId(id);
         return ResponseEntity.ok(roomService.update(roomRequest));
     }
 
     @Operation(summary = "Delete a room by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User deleted"),
+            @ApiResponse(responseCode = "204", description = "User deleted"),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = Void.class))),
     })
     @DeleteMapping("/{id}")

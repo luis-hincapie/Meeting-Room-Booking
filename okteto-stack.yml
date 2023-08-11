@@ -1,0 +1,10 @@
+name: meboron
+services:
+  meboron-java:
+    public: true
+    image: okteto.dev/meboron-java
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080
