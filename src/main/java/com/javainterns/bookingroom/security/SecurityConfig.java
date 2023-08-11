@@ -4,7 +4,6 @@ import com.javainterns.bookingroom.security.filters.JwtAuthenticationFilter;
 import com.javainterns.bookingroom.security.filters.JwtAuthorizationFilter;
 import com.javainterns.bookingroom.security.jwt.JwtUtils;
 import com.javainterns.bookingroom.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,14 +26,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    JwtUtils jwtUtils;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    JwtAuthorizationFilter authorizationFilter;
+
+    private final UserDetailsServiceImpl userDetailsService;
+
+
+    private final JwtAuthorizationFilter authorizationFilter;
+
+    public SecurityConfig(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService, JwtAuthorizationFilter authorizationFilter) {
+        this.jwtUtils = jwtUtils;
+        this.userDetailsService = userDetailsService;
+        this.authorizationFilter = authorizationFilter;
+    }
 
     @Bean
     SecurityFilterChain securityFilterChain(
@@ -64,7 +69,7 @@ public class SecurityConfig {
                                     "/v3/api-docs/**"
                             )
                             .permitAll();
-                    auth.requestMatchers(HttpMethod.POST,"/users").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/users").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
