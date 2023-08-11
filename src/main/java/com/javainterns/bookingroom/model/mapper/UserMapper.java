@@ -1,13 +1,13 @@
 package com.javainterns.bookingroom.model.mapper;
 
 import com.javainterns.bookingroom.model.User;
-import com.javainterns.bookingroom.model.dto.CreateUserDTO;
+import com.javainterns.bookingroom.model.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
 
-    public User toUser(CreateUserDTO userRequest) {
+    public User toUser(UserDto userRequest) {
         return new User(null,
                 userRequest.getEmail(),
                 userRequest.getUsername(),
@@ -18,11 +18,13 @@ public class UserMapper {
         );
     }
 
-    public CreateUserDTO toUserRequest(User user) {
-        return new CreateUserDTO(
+    public UserDto toUserDto(User user) {
+        return new UserDto(
+                user.getId(),
                 user.getEmail(),
                 user.getUsername(),
-                user.getPassword()
+                user.getPassword(),
+                user.getRoles()
         );
     }
 }
