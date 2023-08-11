@@ -3,7 +3,6 @@ package com.javainterns.bookingroom.service;
 import com.javainterns.bookingroom.exceptions.HoursOfOperationNotAvailableException;
 import com.javainterns.bookingroom.exceptions.NoRecordFoundException;
 import com.javainterns.bookingroom.exceptions.RoomAlreadyBooked;
-import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.Room;
 import com.javainterns.bookingroom.model.User;
@@ -12,7 +11,7 @@ import com.javainterns.bookingroom.model.dto.TimeSlot;
 import com.javainterns.bookingroom.model.mapper.BookingRequestMapper;
 import com.javainterns.bookingroom.repository.BookingRepository;
 import com.javainterns.bookingroom.utils.Messages;
-import com.javainterns.bookingroom.utils.TimeValidation;
+import com.javainterns.bookingroom.utils.TimeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,18 +30,18 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRequestMapper bookingRequestMapper;
     private final UserService userService;
     private final RoomService roomService;
-    private final TimeValidation timeValidation;
+    private final TimeValidator timeValidator;
     private Messages messages;
 
     @Autowired
     BookingServiceImpl(BookingRepository bookingRepository, BookingRequestMapper bookingRequestMapper,
                        UserService userService, RoomService roomService,
-                       TimeValidation timeValidation, Messages messages){
+                       TimeValidator timeValidator, Messages messages) {
         this.bookingRepository = bookingRepository;
         this.bookingRequestMapper = bookingRequestMapper;
         this.userService = userService;
         this.roomService = roomService;
-        this.timeValidation = timeValidation;
+        this.timeValidator = timeValidator;
         this.messages = messages;
     }
 
@@ -50,14 +49,11 @@ public class BookingServiceImpl implements BookingService {
     public BookingRequest create(BookingRequest bookingRequest, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         Booking booking = bookingRequestMapper.toBooking(bookingRequest);
-        if (!timeValidation.isValidTimeRange(booking.getEndTime(), booking.getStartTime()))
-            throw new StartTimeIsGreaterThanEndTime("Start time greater than time");
+        timeValidator.isValidTimeRange(booking.getEndTime(), booking.getStartTime());
         Room room = roomService.findRoom(bookingRequest.getRoomId());
         List<Booking> bookingList = bookingRepository.findBookingsByRoomIdAndDate(booking.getDate(), room.getId());
-        if (!timeValidation.bookingRoomHourValidation(booking, room))
-            throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
-        if (!timeValidation.bookingHourValidation(booking, bookingList))
-            throw new RoomAlreadyBooked(room.getId().toString());
+        timeValidator.bookingRoomHourValidation(booking, room);
+        timeValidator.bookingHourValidation(booking, bookingList);
         booking.setUser(user);
         booking.setRoom(room);
         return bookingRequestMapper.toBookingRequest(bookingRepository.save(booking));
