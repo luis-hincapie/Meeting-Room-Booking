@@ -3,7 +3,13 @@ server:
   servlet:
     context-path: /
   port: 8080
-#  address: 192.168.2.233
+# address: 192.168.2.67
+
+jwt:
+  secret:
+    key: 76397924423F4528482B4D6251655468576D5A7134743777217A25432A46294A
+  time:
+    expiration: 86400000
 
 # Spring properties
 spring:
@@ -20,3 +26,5 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /
+    tags-sorter: alpha
+  show-login-endpoint: true

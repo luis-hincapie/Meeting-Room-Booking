@@ -2,36 +2,23 @@ spring:
   application:
     name: booking-room-api
   jpa:
-    show-sql: false
+    show-sql: true
     hibernate:
-      default_schema: public
-      ddl-auto: create
-    properties:
-      hibernate:
-        order_inserts: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          batch_size: 50
-          lob:
-            non_contextual_creation: true
-        temp:
-          use_jdbc_metadata_defaults: false
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  # hidernate:
+  #   ddl-auto: auto
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:/data.sql
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/db_postgres
+    url: jdbc:postgresql://db.evnmidplpysgsgfmxteg.supabase.co:5432/postgres
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: password123
+    password: BlueLabel@77.
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
-
-logging:
-  level:
-    root: INFO
-    org.springframework: INFO
-
-app:
-  cors:
-    allowed-origins: http://localhost:3000
