@@ -2,6 +2,7 @@ package com.javainterns.bookingroom.controller.admin;
 
 import java.util.List;
 
+import com.javainterns.bookingroom.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping(path = "/users")
 public class AdminUserController {
-    @Autowired
-    UserService userService;
 
-    @Autowired
-    UserMapper userMapper;
+    private final UserService userService;
+
+    public AdminUserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Operation(summary = "Get all users")
     @ApiResponses(
@@ -35,7 +37,7 @@ public class AdminUserController {
     )
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<User> findUsers() {
+    public List<UserDto> findUsers() {
         return userService.findAll();
     }
 }
