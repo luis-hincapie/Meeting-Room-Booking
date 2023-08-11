@@ -22,8 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/rooms")
 public class RoomController {
 
+  private final RoomService roomService;
+
   @Autowired
-  RoomService roomService;
+  public RoomController(RoomService roomService) {
+    this.roomService = roomService;
+  }
+
 
   @Operation(summary = "Get all rooms")
   @ApiResponses(

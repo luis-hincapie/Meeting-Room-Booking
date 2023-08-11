@@ -49,19 +49,14 @@ public class RoomServiceImpl implements RoomService {
         new NoRecordFoundException(messages.get(ROOM_NOT_FOUND))
       );
     if (
-      Boolean.FALSE.equals(room.getIsActive())
+      Boolean.FALSE.equals(room.isActive())
     ) throw new NoRecordFoundException(messages.get(ROOM_NOT_FOUND));
     return roomRequestMapper.toRoomRequest(room);
   }
 
   @Override
   public List<RoomRequest> findAll() {
-    return roomRepository
-      .findAll()
-      .stream()
-      .filter(Room::getIsActive)
-      .map(roomRequestMapper::toRoomRequest)
-      .toList();
+    return roomRepository.findByIsActiveTrue().stream().map(roomRequestMapper::toRoomRequest).toList();
   }
 
   @Override
@@ -92,7 +87,7 @@ public class RoomServiceImpl implements RoomService {
       .orElseThrow(() ->
         new NoRecordFoundException(messages.get(ROOM_NOT_FOUND))
       );
-    room.setIsActive(false);
+    room.setActive(false);
     roomRepository.save(room);
   }
 
@@ -104,7 +99,7 @@ public class RoomServiceImpl implements RoomService {
         new NoRecordFoundException(messages.get(ROOM_NOT_FOUND))
       );
     if (
-      Boolean.FALSE.equals(room.getIsActive())
+      Boolean.FALSE.equals(room.isActive())
     ) throw new NoRecordFoundException(messages.get(ROOM_NOT_FOUND));
     return room;
   }
