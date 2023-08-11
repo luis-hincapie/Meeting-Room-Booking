@@ -15,10 +15,13 @@ import java.util.Locale;
 @Component
 public class Messages {
 
-    @Autowired
-    private MessageSource messageSource;
 
-    private MessageSourceAccessor accessor;
+    private static MessageSourceAccessor accessor;
+    private final MessageSource messageSource;
+
+    public Messages(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @PostConstruct
     private void init() {
