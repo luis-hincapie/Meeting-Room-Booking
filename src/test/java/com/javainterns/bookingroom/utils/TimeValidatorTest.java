@@ -19,7 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest()
-public class TimeValidationTest {
+public class TimeValidatorTest {
 
     Booking booking1 = new Booking(null, null, null, LocalTime.of(12, 00, 00), LocalTime.of(13, 00, 000), null);
     Booking booking2 = new Booking(null, null, null, LocalTime.of(12, 00, 00), LocalTime.of(13, 00, 000), null);
