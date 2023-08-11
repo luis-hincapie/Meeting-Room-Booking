@@ -12,8 +12,7 @@ public interface BookingService {
   BookingRequest findById(Long id, Principal principal);
   Boolean delete(Long id);
   List<BookingRequest> findAll();
-  List<Booking> findBookingsByUsername(String username);
+  List<BookingRequest> findBookingsByUsername(String username);
   Boolean deleteByUser(Long id, Principal principal);
-  List<Booking> findBookingsByRoomAndDate(Long roomId, LocalDate date);
   List<TimeSlot> findAvailableTimeSlots(Long id, LocalDate date);
 }

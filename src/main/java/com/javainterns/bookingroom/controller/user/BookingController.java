@@ -44,16 +44,8 @@ public class BookingController {
 
   @Operation(summary = "Get all bookings of current user")
   @GetMapping
-  public ResponseEntity<List<BookingRequest>> bookingList(
-    @NotNull Principal principal
-  ) {
-    return ResponseEntity.ok(
-      bookingService
-        .findBookingsByUsername(principal.getName())
-        .stream()
-        .map(booking -> bookingRequestMapper.toBookingRequest(booking))
-        .toList()
-    );
+  public ResponseEntity<List<BookingRequest>> bookingList(@NotNull Principal principal) {
+    return ResponseEntity.ok(bookingService.findBookingsByUsername(principal.getName()));
   }
 
   @Operation(summary = "Get a booking by ID for current user")
@@ -68,14 +60,8 @@ public class BookingController {
     }
   )
   @GetMapping("/{id}")
-  public ResponseEntity<BookingRequest> getBooking(
-    @PathVariable Long id,
-    Principal principal
-  ) {
-    return new ResponseEntity<>(
-      bookingService.findById(id, principal),
-      HttpStatus.OK
-    );
+  public ResponseEntity<BookingRequest> getBooking(@PathVariable Long id, Principal principal) {
+    return new ResponseEntity<>(bookingService.findById(id, principal), HttpStatus.OK);
   }
 
   @Operation(summary = "Delete a booking by booking ID")

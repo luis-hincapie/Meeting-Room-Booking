@@ -16,9 +16,6 @@ public class BookingRequestMapper {
             bookingRequest.getEndTime(),
             bookingRequest.getDate()
     );
-    /*booking.setDate(bookingRequest.getDate());
-    booking.setStartTime(bookingRequest.getStartTime());
-    booking.setEndTime(bookingRequest.getEndTime());*/
     return booking;
   }
 
@@ -30,11 +27,6 @@ public class BookingRequestMapper {
             booking.getStartTime(),
             booking.getEndTime()
     );
-    /*bookingRequest.setId(booking.getId());
-    bookingRequest.setDate(booking.getDate());
-    bookingRequest.setEndTime(booking.getEndTime());
-    bookingRequest.setStartTime(booking.getStartTime());
-    bookingRequest.setRoomId(booking.getRoom().getId());*/
     return bookingRequest;
   }
 }
