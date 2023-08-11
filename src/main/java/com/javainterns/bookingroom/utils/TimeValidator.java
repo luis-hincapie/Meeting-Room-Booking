@@ -5,6 +5,7 @@ import com.javainterns.bookingroom.exceptions.RoomAlreadyBooked;
 import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.Room;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -16,6 +17,7 @@ public class TimeValidator {
             "start-time.could.not.be.greater.than.finish-time";
     private final Messages messages;
 
+    @Autowired
     public TimeValidator(Messages messages) {
         this.messages = messages;
     }
@@ -36,8 +38,8 @@ public class TimeValidator {
 
     public void bookingRoomHourValidation(Booking booking, Room room) {
 
-        if (booking.getStartTime().isBefore(room.getStartTime()) &&
-                booking.getEndTime().isAfter(room.getFinishTime()))
+        if (booking.getStartTime().isBefore(room.getStartTime()) ||
+                room.getFinishTime().isAfter(booking.getEndTime()))
             throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
     }
 }

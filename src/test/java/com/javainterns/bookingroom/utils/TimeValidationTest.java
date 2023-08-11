@@ -1,18 +1,24 @@
 package com.javainterns.bookingroom.utils;
 
+import com.javainterns.bookingroom.exceptions.HoursOfOperationNotAvailableException;
+import com.javainterns.bookingroom.exceptions.RoomAlreadyBooked;
+import com.javainterns.bookingroom.exceptions.StartTimeIsGreaterThanEndTime;
 import com.javainterns.bookingroom.model.Booking;
 import com.javainterns.bookingroom.model.Room;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest()
 public class TimeValidationTest {
 
     Booking booking1 = new Booking(null, null, null, LocalTime.of(12, 00, 00), LocalTime.of(13, 00, 000), null);
@@ -20,23 +26,23 @@ public class TimeValidationTest {
     Booking booking3 = new Booking(null, null, null, LocalTime.of(12, 00, 00), LocalTime.of(13, 00, 000), null);
     Room room = new Room(null,null,null,null, null, null,true,null);
 
-    TimeValidation timeValidation;
+    @Autowired
+    TimeValidator timeValidation;
 
     @BeforeEach
     void setUp() {
-        timeValidation = new TimeValidation();
     }
 
     @ParameterizedTest
     @CsvSource({"00:00,01:00", "01:28,02:30", "23:00,23:59", "00:00,23:59", "11:00,23:00"})
     void falseIfStartTimeIsAfterEndTime(LocalTime endTime, LocalTime startTime) {
-        assertFalse(timeValidation.isValidTimeRange(endTime, startTime));
+        assertThrows(StartTimeIsGreaterThanEndTime.class,()->timeValidation.isValidTimeRange(endTime, startTime));
     }
 
     @ParameterizedTest
     @CsvSource({"01:00,00:00", "03:28,02:30", "23:59,23:00", "23:59,00:00", "23:00,11:00"})
     void trueIfStartTimeIsBeforeEndTime(LocalTime endTime, LocalTime startTime) {
-        assertTrue(timeValidation.isValidTimeRange(endTime, startTime));
+        assertDoesNotThrow(()->timeValidation.isValidTimeRange(endTime, startTime));
     }
 
     @ParameterizedTest
@@ -48,7 +54,7 @@ public class TimeValidationTest {
         booking2.setEndTime(endTime2);
         booking3.setStartTime(startTime3);
         booking3.setEndTime(endTime3);
-        assertTrue(timeValidation.bookingHourValidation(booking3, List.of(booking1,booking2)));
+        assertDoesNotThrow(()->timeValidation.bookingHourValidation(booking3, List.of(booking1,booking2)));
     }
 
     @ParameterizedTest
@@ -60,7 +66,7 @@ public class TimeValidationTest {
         booking2.setEndTime(endTime2);
         booking3.setStartTime(startTime3);
         booking3.setEndTime(endTime3);
-        assertFalse(timeValidation.bookingHourValidation(booking3, List.of(booking1,booking2)));
+        assertThrows(RoomAlreadyBooked.class,()->timeValidation.bookingHourValidation(booking3, List.of(booking1,booking2)));
     }
 
     @ParameterizedTest
@@ -70,7 +76,7 @@ public class TimeValidationTest {
         room.setFinishTime(roomEndTime);
         booking1.setStartTime(startTime);
         booking1.setEndTime(endTime);
-        assertTrue(timeValidation.bookingRoomHourValidation(booking1,room));
+        assertDoesNotThrow(()->timeValidation.bookingRoomHourValidation(booking1,room));
     }
 
     @ParameterizedTest
@@ -80,6 +86,6 @@ public class TimeValidationTest {
         room.setFinishTime(roomEndTime);
         booking1.setStartTime(startTime);
         booking1.setEndTime(endTime);
-        assertFalse(timeValidation.bookingRoomHourValidation(booking1,room));
+        assertThrows(HoursOfOperationNotAvailableException.class,()->timeValidation.bookingRoomHourValidation(booking1,room));
     }
 }

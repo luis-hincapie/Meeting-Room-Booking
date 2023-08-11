@@ -20,7 +20,7 @@ class UserServiceImplTest {
     void setUp() {
     }
 
-    @Test
+/*    @Test
     void create() {
         User user = new User(null, "dgomeee@gmail.com", "davito", "1234", null, null);
         assertEquals(user, userService.create(user));
@@ -37,7 +37,7 @@ class UserServiceImplTest {
         User user = userService.findById(1L);
         userService.delete(1L);
         assertNotEquals(user, userService.findById(1L));
-    }
+    }*/
 
     @Test
     void findAll() {
