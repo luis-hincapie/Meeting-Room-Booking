@@ -19,7 +19,6 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class BookingRequest {
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
