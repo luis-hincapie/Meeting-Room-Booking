@@ -37,9 +37,8 @@ public class TimeValidator {
     }
 
     public void bookingRoomHourValidation(Booking booking, Room room) {
-
-        if (booking.getStartTime().isBefore(room.getStartTime()) ||
-                room.getFinishTime().isAfter(booking.getEndTime()))
+        if(!(booking.getStartTime().isAfter(room.getStartTime())
+                        && booking.getEndTime().isBefore(room.getFinishTime())))
             throw new HoursOfOperationNotAvailableException("The Room isn't open at this time");
     }
 }
