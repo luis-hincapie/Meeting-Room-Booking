@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest()
-public class TimeValidationTest {
+public class TimeValidatorTest {
 
     Booking booking1 = new Booking();
     Booking booking2 = new Booking();
