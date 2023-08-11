@@ -28,8 +28,14 @@ import jakarta.validation.constraints.NotNull;
 @RestController
 @RequestMapping(path = "/admin/rooms")
 public class AdminRoomController {
+
+    private final RoomService roomService;
+
     @Autowired
-    RoomService roomService;
+    public AdminRoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
 
     @Operation(summary = "Create a room")
     @ApiResponses(

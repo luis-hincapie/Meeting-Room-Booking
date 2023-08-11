@@ -13,8 +13,6 @@ public interface BookingService {
   Boolean delete(Long id);
   List<BookingRequest> findAll();
   List<BookingRequest> findBookingsByUsername(String username);
-
   Boolean deleteByUser(Long id, Principal principal);
-  List<Booking> findBookingsByRoomAndDate(Long roomId, LocalDate date);
   List<TimeSlot> findAvailableTimeSlots(Long id, LocalDate date);
 }

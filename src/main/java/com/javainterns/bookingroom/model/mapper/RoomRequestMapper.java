@@ -28,7 +28,7 @@ public class RoomRequestMapper {
       room.getCapacity(),
       room.getStartTime(),
       room.getFinishTime(),
-      room.getIsActive()
+      room.isActive()
     );
   }
 }

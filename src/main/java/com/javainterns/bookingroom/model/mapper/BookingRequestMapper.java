@@ -8,20 +8,25 @@ import org.springframework.stereotype.Component;
 public class BookingRequestMapper {
 
   public Booking toBooking(BookingRequest bookingRequest) {
-    Booking booking = new Booking();
-    booking.setDate(bookingRequest.getDate());
-    booking.setStartTime(bookingRequest.getStartTime());
-    booking.setEndTime(bookingRequest.getEndTime());
+    Booking booking = new Booking(
+            null,
+            null,
+            null,
+            bookingRequest.getStartTime(),
+            bookingRequest.getEndTime(),
+            bookingRequest.getDate()
+    );
     return booking;
   }
 
   public BookingRequest toBookingRequest(Booking booking) {
-    BookingRequest bookingRequest = new BookingRequest();
-    bookingRequest.setId(booking.getId());
-    bookingRequest.setDate(booking.getDate());
-    bookingRequest.setEndTime(booking.getEndTime());
-    bookingRequest.setStartTime(booking.getStartTime());
-    bookingRequest.setRoomId(booking.getRoom().getId());
+    BookingRequest bookingRequest = new BookingRequest(
+            booking.getId(),
+            booking.getRoom().getId(),
+            booking.getDate(),
+            booking.getStartTime(),
+            booking.getEndTime()
+    );
     return bookingRequest;
   }
 }

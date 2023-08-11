@@ -20,12 +20,11 @@ spring:
     name: grades-api
   messages:
     basename: messages/Messages
-springdoc:
-  show-login-endpoint: true
-  swagger-ui:
-    tags-sorter: alpha
 
-# logging:
-#   level:
-#     root: INFO
-#       org.springframework: INFO
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /
+    tags-sorter: alpha
+  show-login-endpoint: true

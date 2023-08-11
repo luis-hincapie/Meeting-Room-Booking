@@ -49,9 +49,8 @@ public class Room {
   private LocalTime finishTime;
 
   @Column(nullable = false)
-  private Boolean isActive;
+  private boolean isActive;
 
   @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-  @JsonIgnore
   private List<Booking> bookingList;
 }
