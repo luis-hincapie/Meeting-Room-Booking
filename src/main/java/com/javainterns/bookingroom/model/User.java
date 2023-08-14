@@ -39,8 +39,8 @@ public class User {
 
     @ManyToMany(
             fetch = FetchType.EAGER,
-            targetEntity = Role.class,
-            cascade = CascadeType.PERSIST
+            targetEntity = Role.class
+//            cascade = CascadeType.PERSIST
     )
     @JoinTable(
             name = "user_roles",
