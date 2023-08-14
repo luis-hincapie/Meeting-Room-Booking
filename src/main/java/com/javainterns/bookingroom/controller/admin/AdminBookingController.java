@@ -24,10 +24,10 @@ public class AdminBookingController {
     @Autowired
     BookingService bookingService;
 
-    @Operation(summary = "Get all bookings")
+    @Operation(summary = "Get bookings")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Booking found"),
+                    @ApiResponse(responseCode = "200", description = "Booking list"),
             }
     )
     @GetMapping

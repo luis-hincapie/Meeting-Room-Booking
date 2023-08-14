@@ -1,6 +1,8 @@
 package com.javainterns.bookingroom.controller.admin;
 
-import java.util.List;
+import com.javainterns.bookingroom.service.UserService;
+import com.javainterns.bookingroom.model.mapper.UserMapper;
+import com.javainterns.bookingroom.model.User;
 
 import com.javainterns.bookingroom.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javainterns.bookingroom.model.User;
-import com.javainterns.bookingroom.model.mapper.UserMapper;
-import com.javainterns.bookingroom.service.UserService;
+import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,10 +29,10 @@ public class AdminUserController {
         this.userService = userService;
     }
 
-    @Operation(summary = "Get all users")
+    @Operation(summary = "Get users")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Users found"),
+                    @ApiResponse(responseCode = "200", description = "User list"),
             }
     )
     @GetMapping

@@ -30,28 +30,28 @@ public class RoomController {
   }
 
 
-  @Operation(summary = "Get all rooms")
-  @ApiResponses(
-    value = { @ApiResponse(responseCode = "200", description = "Users found") }
-  )
-  @GetMapping
-  public ResponseEntity<List<RoomRequest>> findAll() {
-    return ResponseEntity.ok(roomService.findAll());
-  }
-
-  @Operation(summary = "Get a room by ID")
-  @ApiResponses(
-    value = {
-      @ApiResponse(responseCode = "200", description = "User found"),
-      @ApiResponse(
-        responseCode = "404",
-        description = "User not found",
-        content = @Content(schema = @Schema(implementation = Void.class))
-      ),
+    @Operation(summary = "Get all rooms")
+    @ApiResponses(
+            value = {@ApiResponse(responseCode = "200", description = "Users found")}
+    )
+    @GetMapping
+    public ResponseEntity<List<RoomRequest>> findAll() {
+        return ResponseEntity.ok(roomService.findAll());
     }
-  )
-  @GetMapping("/{id}")
-  public ResponseEntity<RoomRequest> findById(@PathVariable @NotNull Long id) {
-    return ResponseEntity.ok(roomService.findById(id));
-  }
+
+    @Operation(summary = "Get a room by ID")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "User found"),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found",
+                            content = @Content(schema = @Schema(implementation = Void.class))
+                    ),
+            }
+    )
+    @GetMapping("/{id}")
+    public ResponseEntity<RoomRequest> findById(@PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(roomService.findById(id));
+    }
 }
