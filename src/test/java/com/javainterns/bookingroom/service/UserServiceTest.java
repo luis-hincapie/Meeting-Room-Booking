@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest()
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserServiceTest {
+    private static List<UserDto> userDtoList = new ArrayList<>();
     @Autowired
     UserServiceImpl userService;
     @Autowired
     UserRepository userRepository;
-    private static List<UserDto> userDtoList = new ArrayList<>();
 
     @BeforeAll
     static void setUp() {
@@ -55,7 +55,7 @@ class UserServiceTest {
             User userFound = userService.findById(userDto.getId());
             //Then
             assertNotNull(userFound);
-            assertEquals(userFound.getId(),userDto.getId());
+            assertEquals(userFound.getId(), userDto.getId());
             assertEquals(userFound.getUsername(), userDto.getUsername());
         });
     }
@@ -63,7 +63,7 @@ class UserServiceTest {
     @ParameterizedTest
     @CsvSource({"10", "20", "30", "40", "50"})
     void findByIdUserThatDoesntExist(long id) {
-        if (!userRepository.existsById(id)) assertThrows(NoRecordFoundException.class,()->userService.findById(id));
+        if (!userRepository.existsById(id)) assertThrows(NoRecordFoundException.class, () -> userService.findById(id));
     }
 
     @Test
@@ -71,17 +71,17 @@ class UserServiceTest {
     void deleteAnExistUser() {
         userDtoList.stream().forEach(userDto -> {
             //When
-            assertDoesNotThrow(()->userService.findById(userDto.getId()));
+            assertDoesNotThrow(() -> userService.findById(userDto.getId()));
             //Then
             assertTrue(userService.delete(userDto.getId()));
-            assertThrows(NoRecordFoundException.class, ()->userService.delete(userDto.getId()));
+            assertThrows(NoRecordFoundException.class, () -> userService.delete(userDto.getId()));
         });
     }
 
     @ParameterizedTest
     @CsvSource({"5", "8", "100", "50"})
-    void deleteNonexistentUser(long id){
-        if (!userRepository.existsById(id)) assertThrows(NoRecordFoundException.class, ()->userService.delete(id));
+    void deleteNonexistentUser(long id) {
+        if (!userRepository.existsById(id)) assertThrows(NoRecordFoundException.class, () -> userService.delete(id));
     }
 
     @Test
@@ -103,7 +103,7 @@ class UserServiceTest {
     @Order(5)
     void findUserNonexistentByUsername() {
         userDtoList.stream().forEach(userDto -> {
-            assertThrows(NoRecordFoundException.class, ()->userService.findByUsername(userDto.getUsername()));
+            assertThrows(NoRecordFoundException.class, () -> userService.findByUsername(userDto.getUsername()));
         });
     }
 }
