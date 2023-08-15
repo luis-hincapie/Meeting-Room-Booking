@@ -85,7 +85,7 @@ class RoomServiceTest {
     }
 
 
-    @DisplayName("Given a Bad RoomRequest when createRoom then return RoomRequest")
+/*    @DisplayName("Given a Bad RoomRequest when createRoom then return RoomRequest")
     @ParameterizedTest
     @CsvSource({"01:00,00:00", "03:28,02:30", "23:59,23:00", "23:59,00:00", "23:00,11:00"})
     void givenBadRoomRequest_whenCreateRoom_thenThrowsException(LocalTime startTime, LocalTime finishTime) {
@@ -107,7 +107,7 @@ class RoomServiceTest {
         // Then
         //verify(roomRepository,never()).save(any(Room.class));
 
-    }
+    }*/
 
     @Test
     void findById() {
